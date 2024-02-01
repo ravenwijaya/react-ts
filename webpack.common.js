@@ -50,6 +50,9 @@ module.exports = {
     }),
   ],
   resolve: {
+    alias: {
+      '@mui/styled-engine': '@mui/styled-engine-sc'
+    },
     extensions: ['.ts', '.tsx', '.js', '.json'],
   },
   optimization: {
