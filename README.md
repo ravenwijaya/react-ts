@@ -1,88 +1,58 @@
 # Company React App
 
-## Description
+## Overview
 
-[Provide a brief description of your company React app.]
+This is a React application scaffolded with webpack and configured for development and production builds. It leverages various tools and libraries to enhance the development experience and optimize the production output.
 
-## Table of Contents
+## Getting Started
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [Scripts](#scripts)
-- [Dev Dependencies](#dev-dependencies)
-- [Dependencies](#dependencies)
-- [Contributing](#contributing)
-- [License](#license)
+Make sure you have [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed on your machine.
 
-## Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/company-react-app.git
-   cd company-react-app
-   ```
-````
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-## Usage
-
-Start the development server:
-
-```bash
-npm start
-```
-
-Visit `http://localhost:3000` in your browser to see the app.
+1. Clone the repository: `git clone <repository-url>`
+2. Install dependencies: `npm install`
+3. Start the development server: `npm start`
 
 ## Scripts
 
-- **Start**: `npm start` - Run the development server with webpack.
-- **Build**: `npm run build` - Build the app using webpack.
+- **start**: Runs the development server using webpack with the configuration from `webpack.dev.js`.
+- **build**: Builds the production-ready application using webpack with the configuration from `webpack.prod.js`.
+- **lint**: Lints the project files using ESLint.
+- **lint:fix**: Lints and fixes the project files using ESLint.
+- **format**: Formats the project files using Prettier.
 
-## Dev Dependencies
+## Technologies Used
 
-- **@types/react**: ^18.2.48
-- **@types/react-dom**: ^18.2.18
-- **copy-webpack-plugin**: ^12.0.2
-- **css-loader**: ^6.10.0
-- **dotenv**: ^16.4.1
-- **html-webpack-plugin**: ^5.6.0
-- **mini-css-extract-plugin**: ^2.7.7
-- **postcss-loader**: ^8.1.0
-- **postcss-preset-env**: ^9.3.0
-- **purgecss-webpack-plugin**: ^5.0.0
-- **style-loader**: ^3.3.4
-- **ts-loader**: ^9.5.1
-- **typescript**: ^5.3.3
-- **webpack**: ^5.90.0
-- **webpack-cli**: ^5.1.4
-- **webpack-dev-server**: ^4.15.1
-- **webpack-merge**: ^5.10.0
+### Development Dependencies
 
-## Dependencies
+- [TypeScript](https://www.typescriptlang.org/)
+- [Webpack](https://webpack.js.org/)
+- [ESLint](https://eslint.org/)
+- [Prettier](https://prettier.io/)
+- [Husky](https://typicode.github.io/husky/)
+- [PostCSS](https://postcss.org/)
 
-- **react**: ^18.2.0
-- **react-dom**: ^18.2.0
+### Dependencies
 
-## Contributing
+- [React](https://reactjs.org/)
+- [Material-UI](https://mui.com/)
+- [Styled Components](https://styled-components.com/)
 
-If you would like to contribute to the project, please follow these steps:
+## Folder Structure
 
-1. Fork the project.
-2. Create a new branch (`git checkout -b feature/new-feature`).
-3. Make your changes and commit them (`git commit -am 'Add new feature'`).
-4. Push to the branch (`git push origin feature/new-feature`).
-5. Create a new Pull Request.
+- `src`: Contains the source code of the React application.
+- `public`: Contains static assets and the HTML template used by HtmlWebpackPlugin.
+
+## Configuration Files
+
+- `webpack.dev.js`: Configuration file for development build.
+- `webpack.prod.js`: Configuration file for production build.
 
 ## License
 
-This project is licensed under the ISC License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the [ISC License](LICENSE).
 
-```
+## Author
 
-Replace placeholders such as "your-username" and "[Provide a brief description of your company React app.]" with your actual details. Feel free to customize the template further to match your specific project requirements.
-```
+Raven Wijaya
+
+Feel free to customize this README according to your project's specific details and requirements.

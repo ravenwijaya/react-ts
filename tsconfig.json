@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "paths": {
-      "*": ["*", "src/*"]
+      "*": ["*", "src/*"],
     },
     "esModuleInterop": true,
     "jsx": "react-jsx",
@@ -12,7 +12,7 @@
     "strict": true,
     "target": "esnext",
     "allowSyntheticDefaultImports": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
 }
