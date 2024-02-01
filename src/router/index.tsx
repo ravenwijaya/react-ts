@@ -2,6 +2,7 @@ import { Route, BrowserRouter, Routes } from 'react-router-dom'
 import Tags from '../pages/Tags'
 import Home from '../pages/Home'
 import { ROUTES } from '../constants/core'
+import withLayout from './withLayout'
 
 function AppRouter() {
   return (
@@ -13,4 +14,4 @@ function AppRouter() {
     </BrowserRouter>
   )
 }
-export default AppRouter
+export default withLayout(AppRouter)
