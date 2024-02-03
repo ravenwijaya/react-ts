@@ -17,8 +17,12 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(png|gif|jpe?g|svg|woff|woff2|ttf|eot)$/,
-        exclude: /node_modules/,
+        test: /\.svg$/,
+        use: ['@svgr/webpack', 'file-loader'],
+      },
+      {
+        test: /\.(png|gif|jpe?g|woff|woff2|ttf|eot)$/,
+        exclude: /\.svg$/, // Exclude SVG files from the general file-loader rule
         use: ['url-loader', 'file-loader'],
       },
       {

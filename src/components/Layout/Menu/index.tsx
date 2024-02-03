@@ -18,7 +18,7 @@ const MenuItem = ({ text, isActive, onClick }: MenuItemProps) => (
     onClick={!isActive ? onClick : () => {}}
     isActive={isActive}
   >
-    <Typography variant="h1" component="h2">
+    <Typography variant="h6" component="h6" style={{ color: 'white' }}>
       {text}
     </Typography>
   </MenuButtonContainer>
@@ -31,7 +31,7 @@ const Menu = () => {
     <MenuContainer>
       <ItemContainer>
         <MenuItem
-          text="Home"
+          text="Nav"
           onClick={() => navigate(ROUTES.HOME)}
           isActive={ROUTES.HOME === pathname}
         />

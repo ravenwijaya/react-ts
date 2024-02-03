@@ -8,10 +8,16 @@ interface MenuButtonContainerProps {
 
 export const MenuContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  background-color: red;
-  ${media.small`
-    background-color:blue;
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  z-index: 99;
+  background-color: ${(props) => props.theme.customColors.grey1};
+  height: 66px;
+  ${media.xlarge`
+  flex-direction:column;
+  width:80px;
+  height:100%;
   `}
 `
 

@@ -14,6 +14,7 @@ const sets: Sets = {
     DEVICE_SIZES.large - 1
   }px)`,
   large: `(min-width:${DEVICE_SIZES.large}px)`,
+  xlarge: `(min-width:${DEVICE_SIZES.xlarge}px)`,
 }
 
 interface HiddenProps {

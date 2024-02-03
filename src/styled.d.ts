@@ -1,6 +1,6 @@
 import 'styled-components'
 import { Theme } from '@mui/material/styles'
-import { CustomTheme } from './theme'
+import { CustomTheme } from './theme/theme'
 
 declare module '@mui/material/styles' {
   // eslint-disable-next-line no-shadow

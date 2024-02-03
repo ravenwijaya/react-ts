@@ -1,11 +1,25 @@
 import styled from 'styled-components'
+import media from '../../utils/media'
 
 export const MainContainer = styled.div`
   display: flex;
+  flex: 1;
+  flex-direction: row;
   background-color: ${(props) => props.theme.customColors.black1};
 `
 
-export const MainConstainer = styled.div`
+export const FlexContainer = styled.div`
   display: flex;
-  background-color: ${(props) => props.theme.customColors.black1};
+  flex: 1;
+  max-width: 100%;
+  height: 100vh;
+  flex-direction: column;
+  overflow-y: auto;
+  padding-top: 70px;
+  padding-bottom: 66px;
+  ${media.xlarge`
+    padding-top:0px;
+    padding-bottom:0px;
+    padding-left:80px;
+  `}
 `

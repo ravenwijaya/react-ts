@@ -19,6 +19,7 @@ const theme = createTheme({
     black1: '#121212',
     white1: '#FFFFFF',
     red1: '#B02121',
+    grey1: '#1B1B1B',
   },
   fontWeight: {
     regular: 400,
