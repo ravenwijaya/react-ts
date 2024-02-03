@@ -2,16 +2,18 @@ import { Route, BrowserRouter, Routes } from 'react-router-dom'
 import Tags from '../pages/Tags'
 import Home from '../pages/Home'
 import { ROUTES } from '../constants/core'
-import withLayout from './withLayout'
+import SecureRoute from './SecureRoute'
 
 function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={ROUTES.HOME} element={<Home />} />
-        <Route path={ROUTES.TAGS} element={<Tags />} />
+        <Route element={<SecureRoute />}>
+          <Route path={ROUTES.HOME} element={<Home />} />
+          <Route path={ROUTES.TAGS} element={<Tags />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   )
 }
-export default withLayout(AppRouter)
+export default AppRouter

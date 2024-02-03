@@ -4,4 +4,4 @@ export const ROUTES = {
 }
 export const RESOURCE_NAMES = {
   // ...
-};
+}
