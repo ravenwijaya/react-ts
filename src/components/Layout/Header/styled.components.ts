@@ -1,7 +1,7 @@
+import Box from '@mui/material/Box'
 import styled from 'styled-components'
-import { ReactComponent as Logo } from '../../../assets/svgs/logo.svg'
 
-export const HeaderContainer = styled.div`
+export const HeaderContainer = styled(Box)`
   display: flex;
   align-items: center;
   position: fixed;
@@ -11,9 +11,4 @@ export const HeaderContainer = styled.div`
   background-color: ${(props) => props.theme.customColors.grey1};
   height: 70px;
   padding-left: 21px;
-`
-
-export const StyledLogo = styled(Logo)`
-  width: 35px;
-  height: 15px;
 `

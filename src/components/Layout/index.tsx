@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { Hidden } from '../UI/Hidden'
+import Hidden from '../UI/Hidden'
 import Menu from './Menu'
 import { FlexContainer, MainContainer } from './styled.components'
 import Header from './Header'

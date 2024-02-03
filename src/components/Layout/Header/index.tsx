@@ -1,8 +1,10 @@
-import { HeaderContainer, StyledLogo } from './styled.components'
+import Icon from '../../UI/Icon'
+import { ICON_NAMES } from '../../../constants/core'
+import { HeaderContainer } from './styled.components'
 
 const Header = () => (
   <HeaderContainer>
-    <StyledLogo />
+    <Icon name={ICON_NAMES.LOGO} />
   </HeaderContainer>
 )
 export default Header

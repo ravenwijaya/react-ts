@@ -13,7 +13,9 @@ const sets: Sets = {
   medium: `(min-width:${DEVICE_SIZES.medium}px) and (max-width:${
     DEVICE_SIZES.large - 1
   }px)`,
-  large: `(min-width:${DEVICE_SIZES.large}px)`,
+  large: `(min-width:${DEVICE_SIZES.large}px) and (max-width:${
+    DEVICE_SIZES.xlarge - 1
+  }px)`,
   xlarge: `(min-width:${DEVICE_SIZES.xlarge}px)`,
 }
 

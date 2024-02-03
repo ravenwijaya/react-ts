@@ -1,14 +1,15 @@
 import styled from 'styled-components'
+import Box from '@mui/material/Box'
 import media from '../../utils/media'
 
-export const MainContainer = styled.div`
+export const MainContainer = styled(Box)`
   display: flex;
   flex: 1;
   flex-direction: row;
   background-color: ${(props) => props.theme.customColors.black1};
 `
 
-export const FlexContainer = styled.div`
+export const FlexContainer = styled(Box)`
   display: flex;
   flex: 1;
   max-width: 100%;
