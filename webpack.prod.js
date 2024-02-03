@@ -38,6 +38,7 @@ const prodConfig = {
       paths: glob.sync(`${purgePath.src}/**/*`, {
         nodir: true,
       }),
+      safelist: ['html', 'body'],
     }),
   ],
 }
