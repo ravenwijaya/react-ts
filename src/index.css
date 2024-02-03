@@ -8,7 +8,7 @@ body {
   display: flex;
   overflow: hidden;
   font-size: 1.6rem;
-  margin: 0;
+  margin: 0 !important;
 }
 
 #root {
