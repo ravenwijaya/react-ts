@@ -15,7 +15,7 @@ export const MenuContainer = styled(Box)`
   bottom: 0px;
   width: 100%;
   z-index: 99;
-  background-color: ${(props) => props.theme.customColors.grey1};
+  background-color: ${({ theme }) => theme.customColors.grey1};
   height: 66px;
   ${media.xlarge`
   flex-direction:column;
@@ -54,16 +54,19 @@ export const MenuButtonContainer = styled(Box)<MenuButtonContainerProps>`
 export const ButtonText = styled(Typography)`
   font-family: Ubuntu;
   font-size: 12px;
-  font-weight: ${(props) => props.theme.fontWeight.regular};
-  color: ${(props) => props.theme.customColors.white1};
+  font-weight: ${({ theme }) => theme.fontWeight.regular};
+  color: ${({ theme }) => theme.customColors.white1};
   line-height: 18px;
   letter-spacing: 0.4000000059604645px;
 `
+
 export const StyledBadge = styled(Badge)`
   .MuiBadge-badge {
     min-width: 7px;
     height: 7px;
     padding: 0;
-    background-color: ${(props) => props.theme.customColors.blue1};
+    background-color: ${({ theme }) => theme.customColors.blue1};
+    top: -3px;
+    right: -3px;
   }
 `

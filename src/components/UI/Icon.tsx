@@ -15,18 +15,27 @@ interface IconProps {
   name: IconValue
   width?: number
   height?: number
+  color?: string
 }
 
 const StyledIcon = styled(Box)<IconProps>`
   svg {
     width: ${({ width }) => width}px;
     height: ${({ height }) => height}px;
+    fill: ${({ color }) => color}; /* Change the fill color dynamically */
   }
 `
 
-const Icon = ({ name, width = 35, height = 15 }: IconProps) => {
+const Icon = ({
+  name,
+  width = 35,
+  height = 15,
+  color = 'white',
+}: IconProps) => {
   const Component = ICONS[name]
-  return <StyledIcon as={Component} width={width} height={height} />
+  return (
+    <StyledIcon as={Component} width={width} height={height} color={color} />
+  )
 }
 
 export default Icon

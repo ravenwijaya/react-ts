@@ -1,10 +1,10 @@
 import { ThemeProvider } from 'styled-components'
-import theme from './theme/theme'
+import { customTheme } from './theme/theme'
 import AppRouter from './router'
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={customTheme}>
       <AppRouter />
     </ThemeProvider>
   )

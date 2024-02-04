@@ -6,7 +6,7 @@ export const MainContainer = styled(Box)`
   display: flex;
   flex: 1;
   flex-direction: row;
-  background-color: ${(props) => props.theme.customColors.black1};
+  background-color: ${({ theme }) => theme.customColors.black1};
 `
 
 export const FlexContainer = styled(Box)`

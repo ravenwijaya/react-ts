@@ -1,4 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom'
+import { theme } from '../../../theme/theme'
 import Icon from '../../UI/Icon'
 import Hidden from '../../UI/Hidden'
 import { ICON_NAMES, ROUTES } from '../../../constants/core'
@@ -23,10 +24,19 @@ const MenuItem = ({ text, icon, isActive, onClick }: MenuItemProps) => (
     onClick={!isActive ? onClick : () => {}}
     isActive={isActive}
   >
-    <StyledBadge badgeContent={''}>
-      <Icon name={icon} width={24} height={24} />
+    <StyledBadge badgeContent={isActive ? null : ''}>
+      <Icon
+        name={icon}
+        width={24}
+        height={24}
+        color={isActive ? theme.customColors.white1 : theme.customColors.grey2}
+      />
     </StyledBadge>
-    <ButtonText variant="caption">{text}</ButtonText>
+    {isActive && (
+      <Hidden only={['xsmall', 'small', 'medium', 'large']}>
+        <ButtonText variant="caption">{text}</ButtonText>
+      </Hidden>
+    )}
   </MenuButtonContainer>
 )
 
@@ -50,8 +60,8 @@ const Menu = () => {
         />
         <MenuItem
           text="Tags"
-          onClick={() => navigate(ROUTES.HOME)}
-          isActive={ROUTES.HOME === pathname}
+          onClick={() => navigate(ROUTES.TAGS)}
+          isActive={ROUTES.TAGS === pathname}
           icon={ICON_NAMES.UNION}
         />
       </ItemContainer>

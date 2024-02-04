@@ -13,24 +13,30 @@ export interface CustomTheme {
   fontWeight: NumberValueMap
   customFonts: StringValueMap
 }
+const customColors = {
+  black1: '#121212',
+  white1: '#FFFFFF',
+  white2: '#FFFFFF80',
+  red1: '#B02121',
+  grey1: '#1B1B1B',
+  grey2: '#6A6A6A',
+  blue1: '#00D1FF',
+  orange1: '#FF9B33',
+}
+const fontWeight = {
+  regular: 400,
+  semiBold: 600,
+  bold: 700,
+}
+const customFonts = {
+  openSans: 'Open Sans',
+  ubuntu: 'Ubuntu',
+}
 
-const theme = createTheme({
-  customColors: {
-    black1: '#121212',
-    white1: '#FFFFFF',
-    red1: '#B02121',
-    grey1: '#1B1B1B',
-    blue1: '#00D1FF',
-  },
-  fontWeight: {
-    regular: 400,
-    semiBold: 600,
-    bold: 700,
-  },
-  customFonts: {
-    openSans: 'Open Sans',
-    ubuntu: 'Ubuntu',
-  },
-})
+export const theme = {
+  customColors,
+  customFonts,
+  fontWeight,
+}
 
-export default theme
+export const customTheme = createTheme(theme)
