@@ -1,5 +1,9 @@
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
-import { Button } from '@mui/material'
+import Button from '@mui/material/Button'
+// import { useState } from 'react'
+import { Tabs } from '@mui/base/Tabs'
+// import { useState } from 'react'
+// import { useFetchFollowersQuery } from '../../store/apis/userApi'
 import InputSlider from '../../components/UI/InputSlider'
 import { theme } from '../../theme/theme'
 import Input from '../../components/UI/Input'
@@ -9,6 +13,9 @@ import {
   ListContainer,
   SearchContainer,
   SettingContainer,
+  Tab,
+  TabPanel,
+  TabsList,
   Title,
 } from './styled.components'
 import { Hidden } from '../../components/UI/Hidden'
@@ -16,10 +23,28 @@ import { Hidden } from '../../components/UI/Hidden'
 interface FormInput {
   search: string
 }
+
 const Home = () => {
+  // const [followersFetchArgs, setFollowerFetchArgs] = useState({
+  //   page: 1,
+  //   pageSize: 10,
+  // })
+  // const { data: FollowersResponse } = useFetchFollowersQuery({
+  //   page: followersFetchArgs.page,
+  //   pageSize: followersFetchArgs.pageSize,
+  // })
+
+  // const handleFetchFollowers = () => {
+  //   setFollowerFetchArgs((prev) => ({ ...prev, page: 1 }))
+  // }
+
   const { handleSubmit, control } = useForm()
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    const inputValues = data as FormInput
+  const onSubmit: SubmitHandler<FieldValues> = (inputData) => {
+    const inputValues = inputData as FormInput
+    // const x = inputData.search.split(',')
+    // setPage(parseInt(x[0]))
+    // const pageSizex = parseInt(x[1])
+    // if (pageSize) setPageSize(pageSizex)
     console.log(inputValues)
   }
 
@@ -45,7 +70,16 @@ const Home = () => {
         </Button>
       </SettingContainer>
       <Hidden only={['xsmall', 'small', 'medium', 'large']}>
-        <ListContainer></ListContainer>
+        <ListContainer>
+          <Tabs defaultValue={1}>
+            <TabsList>
+              <Tab value={1}>Followers</Tab>
+              <Tab value={2}>Following</Tab>
+            </TabsList>
+            <TabPanel value={1}>First page</TabPanel>
+            <TabPanel value={2}>Second page</TabPanel>
+          </Tabs>
+        </ListContainer>
       </Hidden>
     </BaseContainer>
   )
