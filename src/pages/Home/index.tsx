@@ -1,9 +1,7 @@
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
 import Button from '@mui/material/Button'
-// import { useState } from 'react'
-import { Tabs } from '@mui/base/Tabs'
-// import { useState } from 'react'
-// import { useFetchFollowersQuery } from '../../store/apis/userApi'
+import { useState } from 'react'
+import { useFetchFollowersQuery } from '../../store/apis/userApi'
 import InputSlider from '../../components/UI/InputSlider'
 import { theme } from '../../theme/theme'
 import Input from '../../components/UI/Input'
@@ -15,28 +13,30 @@ import {
   SettingContainer,
   Tab,
   TabPanel,
+  StyledTabs,
   TabsList,
   Title,
 } from './styled.components'
 import { Hidden } from '../../components/UI/Hidden'
+import ItemList from '../../components/List'
 
 interface FormInput {
   search: string
 }
 
 const Home = () => {
-  // const [followersFetchArgs, setFollowerFetchArgs] = useState({
-  //   page: 1,
-  //   pageSize: 10,
-  // })
-  // const { data: FollowersResponse } = useFetchFollowersQuery({
-  //   page: followersFetchArgs.page,
-  //   pageSize: followersFetchArgs.pageSize,
-  // })
-
-  // const handleFetchFollowers = () => {
-  //   setFollowerFetchArgs((prev) => ({ ...prev, page: 1 }))
-  // }
+  const [followersFetchArgs, setFollowerFetchArgs] = useState({
+    page: 1,
+    pageSize: 10,
+  })
+  const {
+    data: followersResponse,
+    isLoading: followersIsLoading,
+    isFetching: followersIsFetching,
+  } = useFetchFollowersQuery(followersFetchArgs)
+  const handleFetchFollowers = () => {
+    setFollowerFetchArgs((prev) => ({ ...prev, page: prev.page + 1 }))
+  }
 
   const { handleSubmit, control } = useForm()
   const onSubmit: SubmitHandler<FieldValues> = (inputData) => {
@@ -47,7 +47,18 @@ const Home = () => {
     // if (pageSize) setPageSize(pageSizex)
     console.log(inputValues)
   }
+  console.log(followersFetchArgs)
+  console.log(followersResponse)
+  console.log({ followersIsLoading })
 
+  const [value, setValue] = useState(1)
+
+  const handleTabChange = (
+    event: React.SyntheticEvent<Element, Event> | null,
+    newValue: string | number | null,
+  ) => {
+    setValue(newValue as number)
+  }
   return (
     <BaseContainer>
       <SettingContainer>
@@ -71,14 +82,23 @@ const Home = () => {
       </SettingContainer>
       <Hidden only={['xsmall', 'small', 'medium', 'large']}>
         <ListContainer>
-          <Tabs defaultValue={1}>
+          <StyledTabs onChange={handleTabChange} value={value}>
             <TabsList>
               <Tab value={1}>Followers</Tab>
               <Tab value={2}>Following</Tab>
             </TabsList>
-            <TabPanel value={1}>First page</TabPanel>
-            <TabPanel value={2}>Second page</TabPanel>
-          </Tabs>
+            <TabPanel value={1} isActive={value === 1}>
+              <ItemList
+                data={followersResponse?.data ?? []}
+                total={followersResponse?.total}
+                isLoading={followersIsLoading || followersIsFetching}
+                handleNextPage={handleFetchFollowers}
+              ></ItemList>
+            </TabPanel>
+            <TabPanel value={2} isActive={value === 2}>
+              <div style={{ flex: 1, backgroundColor: 'red' }}>asdxxxx</div>
+            </TabPanel>
+          </StyledTabs>
         </ListContainer>
       </Hidden>
     </BaseContainer>

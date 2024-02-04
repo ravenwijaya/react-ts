@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography'
 import { TabsList as BaseTabsList } from '@mui/base/TabsList'
 import { TabPanel as BaseTabPanel } from '@mui/base/TabPanel'
 import { Tab as BaseTab, tabClasses } from '@mui/base/Tab'
+import { Tabs } from '@mui/base/Tabs'
 import media from '../../utils/media'
 
 export const BaseContainer = styled(Box)`
@@ -59,12 +60,16 @@ export const LimitContainer = styled(Box)`
 export const ListContainer = styled(Box)`
   display: flex;
   width: 375px;
+  height: 100%;
   flex-direction: column;
   background-color: ${({ theme }) => theme.customColors.grey1};
 `
 export const ContentContainer = styled(Box)``
-export const StyledTabs = styled(Box)`
-  color: ${({ theme }) => theme.customColors.white1};
+
+export const StyledTabs = styled(Tabs)`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 `
 
 export const Tab = styled(BaseTab)(
@@ -92,10 +97,15 @@ export const Tab = styled(BaseTab)(
   padding-top:34px;
   `,
 )
-export const TabPanel = styled(BaseTabPanel)`
-  width: 100%;
-  font-family: 'IBM Plex Sans', sans-serif;
+export const TabPanel = styled(BaseTabPanel)<{ isActive: boolean }>`
+  flex: 1;
   font-size: 0.875rem;
+  ${({ isActive }) =>
+    isActive &&
+    `
+    display:flex;
+    flex-direction:column;
+  `}
 `
 export const TabsList = styled(BaseTabsList)(
   ({ theme }) => `
