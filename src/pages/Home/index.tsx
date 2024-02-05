@@ -27,13 +27,10 @@ interface FormInput {
 const Home = () => {
   const [followersFetchArgs, setFollowerFetchArgs] = useState({
     page: 1,
-    pageSize: 10,
+    pageSize: 15,
   })
-  const {
-    data: followersResponse,
-    isLoading: followersIsLoading,
-    isFetching: followersIsFetching,
-  } = useFetchFollowersQuery(followersFetchArgs)
+  const { data: followersResponse, isFetching: followersIsFetching } =
+    useFetchFollowersQuery(followersFetchArgs)
   const handleFetchFollowers = () => {
     setFollowerFetchArgs((prev) => ({ ...prev, page: prev.page + 1 }))
   }
@@ -47,9 +44,6 @@ const Home = () => {
     // if (pageSize) setPageSize(pageSizex)
     console.log(inputValues)
   }
-  console.log(followersFetchArgs)
-  console.log(followersResponse)
-  console.log({ followersIsLoading })
 
   const [value, setValue] = useState(1)
 
@@ -91,7 +85,10 @@ const Home = () => {
               <ItemList
                 data={followersResponse?.data ?? []}
                 total={followersResponse?.total}
-                isLoading={followersIsLoading || followersIsFetching}
+                isLoading={followersIsFetching}
+                isEnd={
+                  followersFetchArgs.page === followersResponse?.totalPages
+                }
                 handleNextPage={handleFetchFollowers}
               ></ItemList>
             </TabPanel>

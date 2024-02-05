@@ -22,6 +22,7 @@ const customColors = {
   grey2: '#6A6A6A',
   grey3: '#929292',
   grey4: '#1F1F1F',
+  grey5: '#F8F8F8',
   blue1: '#00D1FF',
   orange1: '#FF9B33',
 }
