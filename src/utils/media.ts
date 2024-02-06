@@ -21,6 +21,18 @@ export const DEVICE_SIZES = {
   mobileSmall: 360,
 }
 
+export const deviceType = {
+  giant: () => window.innerWidth >= DEVICE_SIZES.large,
+  desktop: () =>
+    window.innerWidth >= DEVICE_SIZES.desktop &&
+    window.innerWidth < DEVICE_SIZES.large,
+  tablet: () =>
+    window.innerWidth > DEVICE_SIZES.mobile &&
+    window.innerWidth < DEVICE_SIZES.desktop,
+  mobile: () => window.innerWidth < DEVICE_SIZES.tablet,
+  mobileSmall: () => window.innerWidth < DEVICE_SIZES.mobileSmall,
+}
+
 const media: MediaQueries = {}
 
 Object.keys(DEVICE_SIZES).forEach((size) => {

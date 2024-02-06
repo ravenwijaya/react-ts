@@ -1,6 +1,6 @@
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
-import Button from '@mui/material/Button'
 import { useState } from 'react'
+import { BUTTON_VARIANTS } from '../../constants/core'
 import {
   useFetchFollowersQuery,
   useFetchFollowingQuery,
@@ -22,6 +22,7 @@ import {
 } from './styled.components'
 import { Hidden } from '../../components/UI/Hidden'
 import ItemList from '../../components/List'
+import Button from '../../components/UI/Button'
 
 interface FormInput {
   search: string
@@ -79,7 +80,11 @@ const Home = () => {
           <Title variant="h5"># Of Results Per Page</Title>
           <InputSlider />
         </LimitContainer>
-        <Button onClick={handleSubmit(onSubmit)} variant="contained">
+        <Button
+          style={{ marginTop: 'auto' }}
+          onClick={handleSubmit(onSubmit)}
+          variant={BUTTON_VARIANTS.NORMAL}
+        >
           Submit
         </Button>
       </SettingContainer>

@@ -3,10 +3,12 @@ import Box from '@mui/material/Box'
 import { ICON_NAMES } from '../../constants/core'
 import { ReactComponent as Logo } from '../../assets/svgs/logo.svg'
 import { ReactComponent as Union } from '../../assets/svgs/union.svg'
+import { ReactComponent as ChevLeft } from '../../assets/svgs/chevron-left.svg'
 
 const ICONS = {
   [ICON_NAMES.LOGO]: Logo,
   [ICON_NAMES.UNION]: Union,
+  [ICON_NAMES.CHEVRON_LEFT]: ChevLeft,
 }
 
 type IconValue = (typeof ICON_NAMES)[keyof typeof ICON_NAMES]

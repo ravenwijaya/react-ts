@@ -19,7 +19,7 @@ export const SettingContainer = styled(Box)`
   flex-direction: column;
   padding: 0px 20px;
   ${media.xlarge`
-    padding:54px 130px;
+    padding:54px 130px 87px 130px;
   `}
 `
 export const SearchContainer = styled(Box)`

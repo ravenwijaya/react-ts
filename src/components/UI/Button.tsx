@@ -1,11 +1,14 @@
 import { Button as BaseButton } from '@mui/base/Button'
-import styled from 'styled-components'
+import styled, { CSSObject } from 'styled-components'
+import { ReactElement } from 'react'
+import media from '../../utils/media'
 import { BUTTON_VARIANTS } from '../../constants/core'
 
 interface ButtonProps {
   onClick: () => void
-  text: string
+  children: ReactElement | string
   variant: string
+  style?: CSSObject
 }
 
 const NormalButton = styled(BaseButton)(
@@ -15,8 +18,8 @@ const NormalButton = styled(BaseButton)(
     padding: 13px 16px 13px 16px;
     border-radius: 4px;
     background-color: ${theme.customColors.white1};
-    border-radius:4px;
-
+    border:none;
+    
     font-family: Ubuntu;
     font-size: 14px;
     font-weight: ${theme.fontWeight.bold};
@@ -25,11 +28,10 @@ const NormalButton = styled(BaseButton)(
     text-align: center;
     color:${theme.customColors.black1};
 
-
     transition: all 150ms ease;
     cursor: pointer;
     &:hover {
-    color:${theme.customColors.white1};
+      color:${theme.customColors.white1};
       background-color: ${theme.customColors.black1};
       border:1px solid ${theme.customColors.white1};
     }
@@ -37,6 +39,9 @@ const NormalButton = styled(BaseButton)(
       background-color: grey;
       color: grey;
     }
+    ${media.xlarge`
+        width: 343px
+    `}
   `,
 )
 
@@ -67,9 +72,8 @@ const OutlinedButton = styled(BaseButton)(
   &.base--disabled {
       background-color: grey;
       color: grey;
-  }
-        
-    `,
+  }     
+  `,
 )
 
 const ContainedButton = styled(BaseButton)(
@@ -104,13 +108,25 @@ const ContainedButton = styled(BaseButton)(
       `,
 )
 
-const Button = ({ onClick, text, variant }: ButtonProps) => {
+const Button = ({ onClick, children, variant, style }: ButtonProps) => {
   if (variant === BUTTON_VARIANTS.CONTAINED) {
-    return <ContainedButton onClick={onClick}>{text}</ContainedButton>
+    return (
+      <ContainedButton onClick={onClick} style={style}>
+        {children}
+      </ContainedButton>
+    )
   }
   if (variant === BUTTON_VARIANTS.OUTLINED) {
-    return <OutlinedButton onClick={onClick}>{text}</OutlinedButton>
+    return (
+      <OutlinedButton onClick={onClick} style={style}>
+        {children}
+      </OutlinedButton>
+    )
   }
-  return <NormalButton onClick={onClick}>{text}</NormalButton>
+  return (
+    <NormalButton onClick={onClick} style={style}>
+      {children}
+    </NormalButton>
+  )
 }
 export default Button

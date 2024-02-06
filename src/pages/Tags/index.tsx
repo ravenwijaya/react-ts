@@ -1,3 +1,4 @@
+import { deviceType } from '../../utils/media'
 import { User, useFetchTagsQuery } from '../../store/apis/tagApi'
 import {
   BaseContainer,
@@ -33,7 +34,7 @@ const Tags = () => {
   const { data: tagsResponse } = useFetchTagsQuery({})
   return (
     <BaseContainer>
-      <Title>Tags</Title>
+      <Title variant={deviceType.giant() ? 'h4' : 'h5'}>Tags</Title>
       <ListContainer>{renderTags(tagsResponse)}</ListContainer>
     </BaseContainer>
   )

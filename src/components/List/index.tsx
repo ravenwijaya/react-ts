@@ -49,7 +49,9 @@ const Row = ({ style, item }: { style: CSSProperties; item: MyObject }) => {
           <Username variant="body2">{item.username}</Username>
         </MiddleContent>
         <RightContent>
-          <Button text={btnText} onClick={() => {}} variant={btnVariant} />
+          <Button onClick={() => {}} variant={btnVariant}>
+            {btnText}
+          </Button>
         </RightContent>
       </UserContainer>
     </Box>
