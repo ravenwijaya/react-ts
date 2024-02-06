@@ -115,3 +115,19 @@ export const TabsList = styled(BaseTabsList)(
   background-color:${theme.customColors.black1};
   `,
 )
+
+export const ResultContainer = styled(Box)`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+`
+export const HeaderContainer = styled(Box)`
+  display: flex;
+  background-color: red;
+  align-items: center;
+  gap: 25px;
+  ${media.xlarge`
+    padding-top: 92px;
+    padding-left:92.5px;
+  `}
+`

@@ -1,9 +1,12 @@
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
 import { useState } from 'react'
-import { BUTTON_VARIANTS } from '../../constants/core'
+import Icon from '../../components/UI/Icon'
+import { deviceType } from '../../utils/media'
+import { BUTTON_VARIANTS, ICON_NAMES } from '../../constants/core'
 import {
   useFetchFollowersQuery,
   useFetchFollowingQuery,
+  // useFetchUsersQuery,
 } from '../../store/apis/userApi'
 import InputSlider from '../../components/UI/InputSlider'
 import { theme } from '../../theme/theme'
@@ -19,6 +22,8 @@ import {
   StyledTabs,
   TabsList,
   Title,
+  ResultContainer,
+  HeaderContainer,
 } from './styled.components'
 import { Hidden } from '../../components/UI/Hidden'
 import ItemList from '../../components/List'
@@ -31,28 +36,40 @@ interface FormInput {
 const Home = () => {
   const [value, setValue] = useState(1)
   const { handleSubmit, control } = useForm()
-  const [followersFetchArgs, setFollowerFetchArgs] = useState({
+  const [showResult, setShowResult] = useState(false)
+  const [fetchFollowersArgs, setFetchFollowersArgs] = useState({
     page: 1,
     pageSize: 15,
   })
-  const [followingFetchArgs, setFollowingFetchArgs] = useState({
+  const [fetchFollowingArgs, setFetchFollowingArgs] = useState({
     page: 1,
     pageSize: 15,
   })
+  // const [fetchUsersArgs, setFetchUsersArgs] = useState({
+  //   page: 1,
+  //   pageSize: 15,
+  //   keyword: '',
+  // })
 
-  const { data: followersResponse, isFetching: followersIsFetching } =
-    useFetchFollowersQuery(followersFetchArgs)
-  const { data: followingResponse, isFetching: followingIsFetching } =
-    useFetchFollowingQuery(followingFetchArgs)
+  const { data: responseFollowers, isFetching: isFetchingFollowers } =
+    useFetchFollowersQuery(fetchFollowersArgs)
+  const { data: responseFollowing, isFetching: isFetchingFollowing } =
+    useFetchFollowingQuery(fetchFollowingArgs)
+  // const { data: responseUsers, isFetching: isFetchingUsers } =
+  //   useFetchUsersQuery(fetchUsersArgs)
 
   const handleFetchFollowers = () => {
-    setFollowerFetchArgs((prev) => ({ ...prev, page: prev.page + 1 }))
+    setFetchFollowersArgs((prev) => ({ ...prev, page: prev.page + 1 }))
   }
   const handleFetchFollowing = () => {
-    setFollowingFetchArgs((prev) => ({ ...prev, page: prev.page + 1 }))
+    setFetchFollowingArgs((prev) => ({ ...prev, page: prev.page + 1 }))
   }
+  // const handleFetchUsers = () => {
+  //   setFetchUsersArgs((prev) => ({ ...prev, page: prev.page + 1 }))
+  // }
 
   const onSubmit: SubmitHandler<FieldValues> = (inputData) => {
+    setShowResult(true)
     const inputValues = inputData as FormInput
     console.log(inputValues)
   }
@@ -65,29 +82,38 @@ const Home = () => {
   }
   return (
     <BaseContainer>
-      <SettingContainer>
-        <SearchContainer>
-          <Title variant="h5">Search</Title>
-          <Input
-            name="search"
-            placeholder="keyword"
-            control={control}
-            borderColor={theme.customColors.white2}
-            textColor={theme.customColors.white1}
-          />
-        </SearchContainer>
-        <LimitContainer>
-          <Title variant="h5"># Of Results Per Page</Title>
-          <InputSlider />
-        </LimitContainer>
-        <Button
-          style={{ marginTop: 'auto' }}
-          onClick={handleSubmit(onSubmit)}
-          variant={BUTTON_VARIANTS.NORMAL}
-        >
-          Submit
-        </Button>
-      </SettingContainer>
+      {showResult ? (
+        <SettingContainer>
+          <SearchContainer>
+            <Title variant="h5">Search</Title>
+            <Input
+              name="search"
+              placeholder="keyword"
+              control={control}
+              borderColor={theme.customColors.white2}
+              textColor={theme.customColors.white1}
+            />
+          </SearchContainer>
+          <LimitContainer>
+            <Title variant="h5"># Of Results Per Page</Title>
+            <InputSlider />
+          </LimitContainer>
+          <Button
+            style={{ marginTop: 'auto' }}
+            onClick={handleSubmit(onSubmit)}
+            variant={BUTTON_VARIANTS.NORMAL}
+          >
+            Submit
+          </Button>
+        </SettingContainer>
+      ) : (
+        <ResultContainer>
+          <HeaderContainer>
+            <Icon name={ICON_NAMES.CHEVRON_LEFT} width={12.77} height={21.67} />
+            <Title variant={deviceType.giant() ? 'h4' : 'h5'}>Results</Title>
+          </HeaderContainer>
+        </ResultContainer>
+      )}
       <Hidden only={['xsmall', 'small', 'medium', 'large']}>
         <ListContainer>
           <StyledTabs onChange={handleTabChange} value={value}>
@@ -97,22 +123,22 @@ const Home = () => {
             </TabsList>
             <TabPanel value={1} isActive={value === 1}>
               <ItemList
-                data={followersResponse?.data ?? []}
-                total={followersResponse?.total}
-                isLoading={followersIsFetching}
+                data={responseFollowers?.data ?? []}
+                total={responseFollowers?.total}
+                isLoading={isFetchingFollowers}
                 isEnd={
-                  followersFetchArgs.page === followersResponse?.totalPages
+                  fetchFollowersArgs.page === responseFollowers?.totalPages
                 }
                 handleNextPage={handleFetchFollowers}
               ></ItemList>
             </TabPanel>
             <TabPanel value={2} isActive={value === 2}>
               <ItemList
-                data={followingResponse?.data ?? []}
-                total={followingResponse?.total}
-                isLoading={followingIsFetching}
+                data={responseFollowing?.data ?? []}
+                total={responseFollowing?.total}
+                isLoading={isFetchingFollowing}
                 isEnd={
-                  followingFetchArgs.page === followingResponse?.totalPages
+                  fetchFollowingArgs.page === responseFollowing?.totalPages
                 }
                 handleNextPage={handleFetchFollowing}
               ></ItemList>

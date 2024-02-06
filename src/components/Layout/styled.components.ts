@@ -5,7 +5,7 @@ import media from '../../utils/media'
 export const MainContainer = styled(Box)`
   display: flex;
   flex-direction: row;
-  height:100%;
+  height: 100%;
   background-color: ${({ theme }) => theme.customColors.black1};
 `
 
