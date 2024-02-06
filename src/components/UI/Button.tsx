@@ -78,7 +78,7 @@ const ContainedButton = styled(BaseButton)(
     height:28px;
     padding: 8px 10px 8px 10px;
     border-radius: 20px;
-    gap: 10px
+    gap: 10px;
     background-color: ${theme.customColors.white1};
     border:1px solid ${theme.customColors.white1};
 
