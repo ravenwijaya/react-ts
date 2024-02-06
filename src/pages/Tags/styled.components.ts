@@ -7,7 +7,7 @@ export const BaseContainer = styled(Box)`
   display: flex;
   flex: 1;
   flex-direction: column;
-  padding: 20px 26px 90px 25px;
+  padding: 20px 26px 0px 25px;
   ${media.xlarge`
     padding:80px 257px;
   `}

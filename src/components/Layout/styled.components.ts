@@ -4,16 +4,14 @@ import media from '../../utils/media'
 
 export const MainContainer = styled(Box)`
   display: flex;
-  flex: 1;
   flex-direction: row;
+  height:100%;
   background-color: ${({ theme }) => theme.customColors.black1};
 `
 
 export const FlexContainer = styled(Box)`
   display: flex;
   flex: 1;
-  max-width: 100%;
-  height: 100vh;
   flex-direction: column;
   overflow-y: auto;
   padding-top: 70px;
