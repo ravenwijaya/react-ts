@@ -16,7 +16,6 @@ interface Response {
   data: User[]
 }
 
-// const apiWithTag = api.enhanceEndpoints({ addTagTypes: ['Users'] })
 export const userApi = api.injectEndpoints({
   endpoints: (builder) => ({
     fetchFollowers: builder.query({
@@ -52,7 +51,40 @@ export const userApi = api.injectEndpoints({
         }
       },
     }),
+    fetchFollowing: builder.query({
+      query: ({ page, pageSize }) => {
+        const queryParams = []
+        if (page) queryParams.push(`page=${page}`)
+        if (pageSize) queryParams.push(`pageSize=${pageSize}`)
+        return `/users/friends?${queryParams.join('&')}`
+      },
+      serializeQueryArgs: ({ endpointName, queryArgs }) =>
+        `${endpointName}-${queryArgs.pageSize}`,
+      forceRefetch: ({ currentArg, previousArg }) =>
+        currentArg?.page !== previousArg?.page ||
+        currentArg?.pageSize !== previousArg?.pageSize,
+      merge: (currentCache, newItems) => {
+        const merged = {
+          data: [...currentCache.data, ...newItems.data],
+          page: newItems.page,
+          pageSize: newItems.page,
+          total: newItems.total,
+          totalPages: newItems.totalPages,
+        }
+        return merged
+      },
+      transformResponse: (response) => {
+        const { page, pageSize, total, totalPages, data } = response as Response
+        return {
+          data,
+          page,
+          pageSize,
+          total,
+          totalPages,
+        }
+      },
+    }),
   }),
 })
 
-export const { useFetchFollowersQuery } = userApi
+export const { useFetchFollowersQuery, useFetchFollowingQuery } = userApi

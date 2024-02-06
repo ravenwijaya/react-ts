@@ -9,7 +9,6 @@ export const ListContainer = styled(Box)`
   display: flex;
   padding-top: 32px;
 `
-
 export const UserContainer = styled(Box)`
   display: flex;
   padding: 0 16px;

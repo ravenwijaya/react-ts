@@ -1,7 +1,10 @@
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
 import Button from '@mui/material/Button'
 import { useState } from 'react'
-import { useFetchFollowersQuery } from '../../store/apis/userApi'
+import {
+  useFetchFollowersQuery,
+  useFetchFollowingQuery,
+} from '../../store/apis/userApi'
 import InputSlider from '../../components/UI/InputSlider'
 import { theme } from '../../theme/theme'
 import Input from '../../components/UI/Input'
@@ -25,27 +28,33 @@ interface FormInput {
 }
 
 const Home = () => {
+  const [value, setValue] = useState(1)
+  const { handleSubmit, control } = useForm()
   const [followersFetchArgs, setFollowerFetchArgs] = useState({
     page: 1,
     pageSize: 15,
   })
+  const [followingFetchArgs, setFollowingFetchArgs] = useState({
+    page: 1,
+    pageSize: 15,
+  })
+
   const { data: followersResponse, isFetching: followersIsFetching } =
     useFetchFollowersQuery(followersFetchArgs)
+  const { data: followingResponse, isFetching: followingIsFetching } =
+    useFetchFollowingQuery(followingFetchArgs)
+
   const handleFetchFollowers = () => {
     setFollowerFetchArgs((prev) => ({ ...prev, page: prev.page + 1 }))
   }
-
-  const { handleSubmit, control } = useForm()
-  const onSubmit: SubmitHandler<FieldValues> = (inputData) => {
-    const inputValues = inputData as FormInput
-    // const x = inputData.search.split(',')
-    // setPage(parseInt(x[0]))
-    // const pageSizex = parseInt(x[1])
-    // if (pageSize) setPageSize(pageSizex)
-    console.log(inputValues)
+  const handleFetchFollowing = () => {
+    setFollowingFetchArgs((prev) => ({ ...prev, page: prev.page + 1 }))
   }
 
-  const [value, setValue] = useState(1)
+  const onSubmit: SubmitHandler<FieldValues> = (inputData) => {
+    const inputValues = inputData as FormInput
+    console.log(inputValues)
+  }
 
   const handleTabChange = (
     event: React.SyntheticEvent<Element, Event> | null,
@@ -93,7 +102,15 @@ const Home = () => {
               ></ItemList>
             </TabPanel>
             <TabPanel value={2} isActive={value === 2}>
-              <div style={{ flex: 1, backgroundColor: 'red' }}>asdxxxx</div>
+              <ItemList
+                data={followingResponse?.data ?? []}
+                total={followingResponse?.total}
+                isLoading={followingIsFetching}
+                isEnd={
+                  followingFetchArgs.page === followingResponse?.totalPages
+                }
+                handleNextPage={handleFetchFollowing}
+              ></ItemList>
             </TabPanel>
           </StyledTabs>
         </ListContainer>
