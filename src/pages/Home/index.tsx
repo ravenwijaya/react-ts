@@ -1,9 +1,12 @@
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
-import { useState } from 'react'
+import { useState, ReactNode, CSSProperties } from 'react'
+import { Box, useMediaQuery } from '@mui/material'
+import Skeleton from '@mui/material/Skeleton'
 import Icon from '../../components/UI/Icon'
 import { deviceType } from '../../utils/media'
 import { BUTTON_VARIANTS, ICON_NAMES } from '../../constants/core'
 import {
+  User,
   useFetchFollowersQuery,
   useFetchFollowingQuery,
   // useFetchUsersQuery,
@@ -24,6 +27,13 @@ import {
   Title,
   ResultContainer,
   HeaderContainer,
+  LeftContent,
+  MiddleContent,
+  Name,
+  RightContent,
+  StyledAvatar,
+  UserContainer,
+  Username,
 } from './styled.components'
 import { Hidden } from '../../components/UI/Hidden'
 import ItemList from '../../components/List'
@@ -32,8 +42,79 @@ import Button from '../../components/UI/Button'
 interface FormInput {
   search: string
 }
+type RenderUserFunction = (
+  item: User,
+  style: CSSProperties,
+  key: string,
+) => ReactNode
+
+const renderUser: RenderUserFunction = (item, style, key) => (
+  <Box key={key} style={style}>
+    <UserContainer>
+      <LeftContent>
+        {item ? (
+          <StyledAvatar alt={item.name} src={item.avater} />
+        ) : (
+          <Skeleton
+            variant="circular"
+            width={40}
+            height={40}
+            sx={{ bgcolor: theme.customColors.white3 }}
+          />
+        )}
+      </LeftContent>
+      <MiddleContent>
+        {item ? (
+          <>
+            <Name noWrap variant="body1">
+              {item.name}
+            </Name>
+            <Username noWrap variant="body2">
+              @{item.username}
+            </Username>
+          </>
+        ) : (
+          <>
+            <Skeleton
+              variant="rectangular"
+              width={79}
+              sx={{ bgcolor: theme.customColors.white3 }}
+            />
+            <Skeleton
+              variant="rectangular"
+              width={70}
+              sx={{ bgcolor: theme.customColors.white3 }}
+            />
+          </>
+        )}
+      </MiddleContent>
+      <RightContent>
+        {item ? (
+          <Button
+            onClick={() => {}}
+            variant={
+              item.isFollowing
+                ? BUTTON_VARIANTS.CONTAINED
+                : BUTTON_VARIANTS.OUTLINED
+            }
+          >
+            {item.isFollowing ? 'Following' : 'Follow'}
+          </Button>
+        ) : (
+          <Skeleton
+            variant="rectangular"
+            width={60}
+            height={29}
+            sx={{ bgcolor: theme.customColors.white3 }}
+          />
+        )}
+      </RightContent>
+    </UserContainer>
+  </Box>
+)
 
 const Home = () => {
+  const isDesktop = useMediaQuery(deviceType.desktop)
   const [value, setValue] = useState(1)
   const { handleSubmit, control } = useForm()
   const [showResult, setShowResult] = useState(false)
@@ -110,7 +191,7 @@ const Home = () => {
         <ResultContainer>
           <HeaderContainer>
             <Icon name={ICON_NAMES.CHEVRON_LEFT} width={12.77} height={21.67} />
-            <Title variant={deviceType.giant() ? 'h4' : 'h5'}>Results</Title>
+            <Title variant={isDesktop ? 'h4' : 'h5'}>Results</Title>
           </HeaderContainer>
         </ResultContainer>
       )}
@@ -122,25 +203,27 @@ const Home = () => {
               <Tab value={2}>Following</Tab>
             </TabsList>
             <TabPanel value={1} isActive={value === 1}>
-              <ItemList
-                data={responseFollowers?.data ?? []}
+              <ItemList<User>
+                data={responseFollowers?.data}
                 total={responseFollowers?.total}
                 isLoading={isFetchingFollowers}
                 isEnd={
                   fetchFollowersArgs.page === responseFollowers?.totalPages
                 }
                 handleNextPage={handleFetchFollowers}
+                renderContent={renderUser}
               ></ItemList>
             </TabPanel>
             <TabPanel value={2} isActive={value === 2}>
-              <ItemList
-                data={responseFollowing?.data ?? []}
+              <ItemList<User>
+                data={responseFollowing?.data}
                 total={responseFollowing?.total}
                 isLoading={isFetchingFollowing}
                 isEnd={
                   fetchFollowingArgs.page === responseFollowing?.totalPages
                 }
                 handleNextPage={handleFetchFollowing}
+                renderContent={renderUser}
               ></ItemList>
             </TabPanel>
           </StyledTabs>

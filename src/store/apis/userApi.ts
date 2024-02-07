@@ -1,6 +1,6 @@
 import { api } from './api'
 
-interface User {
+export interface User {
   id: string
   avater: string
   isFollowing: boolean

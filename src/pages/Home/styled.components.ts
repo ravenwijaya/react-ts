@@ -5,6 +5,7 @@ import { TabsList as BaseTabsList } from '@mui/base/TabsList'
 import { TabPanel as BaseTabPanel } from '@mui/base/TabPanel'
 import { Tab as BaseTab, tabClasses } from '@mui/base/Tab'
 import { Tabs } from '@mui/base/Tabs'
+import { Avatar } from '@mui/material'
 import media from '../../utils/media'
 
 export const BaseContainer = styled(Box)`
@@ -130,4 +131,48 @@ export const HeaderContainer = styled(Box)`
     padding-top: 92px;
     padding-left:92.5px;
   `}
+`
+
+export const UserContainer = styled(Box)`
+  display: flex;
+  padding: 0 16px;
+  padding-bottom: 16px;
+`
+export const LeftContent = styled(Box)`
+  width: 40px;
+`
+export const MiddleContent = styled(Box)`
+  flex: 1;
+  margin-left: 15px;
+`
+export const RightContent = styled(Box)`
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+`
+export const StyledAvatar = styled(Avatar)`
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  border: 1px solid ${({ theme }) => theme.customColors.grey5};
+`
+export const Name = styled(Typography)`
+  font-family: Ubuntu;
+  font-size: 16px;
+  font-weight: ${({ theme }) => theme.fontWeight.regular};
+  color: ${({ theme }) => theme.customColors.white1};
+  line-height: 24px;
+  letter-spacing: 0.15000000596046448px;
+  text-align: left;
+  max-width: 130px;
+`
+export const Username = styled(Typography)`
+  font-family: Ubuntu;
+  font-size: 14px;
+  font-weight: ${({ theme }) => theme.fontWeight.regular};
+  color: ${({ theme }) => theme.customColors.white2};
+  line-height: 21px;
+  letter-spacing: 0.25px;
+  text-align: left;
+  max-width: 130px;
 `

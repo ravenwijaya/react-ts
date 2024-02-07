@@ -1,11 +1,13 @@
 import { CSSProperties } from 'react'
-import { Box } from '@mui/material'
+import { Box, Skeleton, useMediaQuery } from '@mui/material'
+import { theme } from '../../theme/theme'
 import { deviceType } from '../../utils/media'
-import { User, useFetchTagsQuery } from '../../store/apis/tagApi'
+import { Tag, useFetchTagsQuery } from '../../store/apis/tagApi'
 import {
   BaseContainer,
   ContentContainer,
   CountText,
+  HeaderContainer,
   ItemContainer,
   ItemLogo,
   ItemLogoContainer,
@@ -15,23 +17,49 @@ import {
   TextContainer,
   Title,
 } from './styled.components'
-import MasonryComponent from '../../components/List/grid'
+import MasonryComponent from '../../components/MasonryGrid'
 
-const spacer = 24
-const height = 199 + 36 - spacer
+const SPACER = 24
+const HEIGHT = 199 + 36 - SPACER
 
-const renderTags = (item: User, style: CSSProperties) => (
-  <Box style={style} id="boxxxx">
-    <ItemContainer height={height}>
+const renderTags = (item: Tag, style: CSSProperties) => (
+  <Box style={style}>
+    <ItemContainer height={HEIGHT}>
       <ContentContainer>
-        <ItemLogoContainer>
-          <ItemLogo>
-            <ItemText noWrap>{item.name}</ItemText>
-          </ItemLogo>
-        </ItemLogoContainer>
+        {item ? (
+          <ItemLogoContainer>
+            <ItemLogo>
+              <ItemText noWrap>{item?.name}</ItemText>
+            </ItemLogo>
+          </ItemLogoContainer>
+        ) : (
+          <Skeleton
+            variant="rectangular"
+            width={150}
+            height={150}
+            sx={{ bgcolor: theme.customColors.white3 }}
+          />
+        )}
         <TextContainer>
-          <TagText noWrap>{item.name}</TagText>
-          <CountText>{item.count} Results</CountText>
+          {item ? (
+            <>
+              <TagText noWrap>{item?.name}</TagText>
+              <CountText>{item?.count} Results</CountText>
+            </>
+          ) : (
+            <>
+              <Skeleton
+                variant="rectangular"
+                width={120}
+                sx={{ bgcolor: theme.customColors.white3 }}
+              />
+              <Skeleton
+                variant="rectangular"
+                width={50}
+                sx={{ bgcolor: theme.customColors.white3 }}
+              />
+            </>
+          )}
         </TextContainer>
       </ContentContainer>
     </ItemContainer>
@@ -39,20 +67,26 @@ const renderTags = (item: User, style: CSSProperties) => (
 )
 
 const Tags = () => {
+  const isDesktop = useMediaQuery(deviceType.desktop)
   const { data: tagsResponse } = useFetchTagsQuery({})
-  const isMobile = !deviceType.giant()
-
+  const titleVariant = isDesktop ? 'h5' : 'h4'
+  const wrapperStyle = {
+    padding: isDesktop ? '0px 257px' : '0px 26px 0px 25px',
+  }
   return (
     <BaseContainer>
-      <Title variant={deviceType.giant() ? 'h4' : 'h5'}>Tags</Title>
+      <HeaderContainer>
+        <Title variant={titleVariant}>Tags</Title>
+      </HeaderContainer>
       <ListContainer>
-        <MasonryComponent<User>
-          defaultHeight={height}
+        <MasonryComponent<Tag>
+          defaultHeight={HEIGHT}
           defaultWidth={150}
-          columnCount={isMobile ? 2 : 5}
-          spacer={24}
+          columnCount={isDesktop ? 5 : 2}
+          spacer={SPACER}
           items={tagsResponse ?? []}
           renderContent={renderTags}
+          wrapperStyle={wrapperStyle}
         />
       </ListContainer>
     </BaseContainer>

@@ -1,4 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useMediaQuery } from '@mui/material'
 import { deviceType } from '../../../utils/media'
 import { theme } from '../../../theme/theme'
 import Icon from '../../UI/Icon'
@@ -43,9 +44,9 @@ const MenuItem = ({ text, icon, isActive, onClick }: MenuItemProps) => (
 
 const Menu = () => {
   const { pathname } = useLocation()
-  const isMobile = !deviceType.giant()
+  const isDesktop = useMediaQuery(deviceType.desktop)
   const navigate = useNavigate()
-  if (isMobile && pathname !== ROUTES.HOME) return <></>
+  if (!isDesktop && pathname !== ROUTES.HOME) return <></>
   return (
     <MenuContainer>
       <Hidden only={['xsmall', 'small', 'medium', 'large']}>

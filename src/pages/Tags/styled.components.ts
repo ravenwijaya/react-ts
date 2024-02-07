@@ -7,10 +7,15 @@ export const BaseContainer = styled(Box)`
   display: flex;
   flex: 1;
   flex-direction: column;
-  padding: 20px 26px 0px 25px;
+`
+export const HeaderContainer = styled(Box)`
+  padding-top: 20px;
+  padding-left: 20px;
   ${media.xlarge`
-    padding:80px 257px;
-  `}
+  padding-top:80px;
+
+    padding-left:257px;
+`}
 `
 export const Title = styled(Typography)`
   font-family: Ubuntu;

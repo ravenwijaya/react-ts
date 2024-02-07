@@ -1,4 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useMediaQuery } from '@mui/material'
 import Icon from '../../UI/Icon'
 import { ICON_NAMES, ROUTES } from '../../../constants/core'
 import { HeaderContainer, NavContainer, Title } from './styled.components'
@@ -7,8 +8,9 @@ import { deviceType } from '../../../utils/media'
 const Header = () => {
   const { pathname } = useLocation()
   const navigate = useNavigate()
-  const isMobile = !deviceType.giant()
-  const showNavigation = isMobile && pathname !== ROUTES.HOME
+  const isDesktop = useMediaQuery(deviceType.desktop)
+
+  const showNavigation = !isDesktop && pathname !== ROUTES.HOME
   return (
     <HeaderContainer showNav={showNavigation}>
       {showNavigation ? (

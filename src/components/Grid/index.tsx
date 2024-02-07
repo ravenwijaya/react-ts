@@ -19,6 +19,7 @@ interface Props<T> {
   defaultHeight: number
   spacer: number
   renderContent: (item: T, style: CSSProperties) => JSX.Element
+  wrapperStyle?: CSSProperties
 }
 
 function MasonryComponent<T>({
@@ -28,14 +29,15 @@ function MasonryComponent<T>({
   defaultHeight,
   spacer,
   renderContent,
+  wrapperStyle,
 }: Props<T>) {
   const cacheRef = useRef<CellMeasurerCache | null>(null)
   const cellPositionerRef = useRef<Positioner | null>(null)
   const masonryRef = useRef<Masonry>(null)
 
-  const columnCountFor = function (availableWidth: number) {
-    return Math.round(availableWidth / (defaultWidth + spacer))
-  }
+  const columnCountFor = (availableWidth: number) =>
+    Math.floor(availableWidth / (defaultWidth + spacer))
+
   if (!cacheRef.current) {
     cacheRef.current = new CellMeasurerCache({
       defaultHeight,
@@ -97,6 +99,7 @@ function MasonryComponent<T>({
         }
         return (
           <Masonry
+            style={wrapperStyle}
             autoHeight={false}
             ref={masonryRef}
             cellCount={items.length}

@@ -22,15 +22,7 @@ export const DEVICE_SIZES = {
 }
 
 export const deviceType = {
-  giant: () => window.innerWidth >= DEVICE_SIZES.large,
-  desktop: () =>
-    window.innerWidth >= DEVICE_SIZES.desktop &&
-    window.innerWidth < DEVICE_SIZES.large,
-  tablet: () =>
-    window.innerWidth > DEVICE_SIZES.mobile &&
-    window.innerWidth < DEVICE_SIZES.desktop,
-  mobile: () => window.innerWidth < DEVICE_SIZES.tablet,
-  mobileSmall: () => window.innerWidth < DEVICE_SIZES.mobileSmall,
+  desktop: `(min-width:${DEVICE_SIZES.xlarge}px)`,
 }
 
 const media: MediaQueries = {}
