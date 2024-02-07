@@ -96,7 +96,7 @@ const Row = ({ style, item }: { style: CSSProperties; item: MyObject }) => {
 
 const ItemList = ({
   data,
-  total,
+  total = 20,
   handleNextPage,
   isLoading,
   isEnd,
@@ -118,7 +118,6 @@ const ItemList = ({
   }
 
   const loadMoreRows = handleNewPageLoad
-  if (!data.length) return <></>
   return (
     <ListContainer>
       <AutoSizer>

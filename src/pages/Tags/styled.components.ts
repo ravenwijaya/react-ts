@@ -32,18 +32,19 @@ export const Title = styled(Typography)`
 export const ListContainer = styled(Box)`
   margin-top: 24px;
   display: flex;
-  gap: 24px;
-  flex-wrap: wrap;
+  flex: 1;
 `
 
-export const ItemContainer = styled(Box)`
+export const ItemContainer = styled(Box)<{ height: number }>`
+  width: 150px;
+  height: ${({ height }) => `${height}px`};
+`
+export const ContentContainer = styled(Box)`
   flex-direction: column;
   display: flex;
   width: 150px;
   height: 199px;
-  gap: 10px;
 `
-
 export const ItemLogoContainer = styled(Box)`
   display: flex;
   align-items: end;
@@ -70,7 +71,7 @@ export const ItemText = styled(Typography)`
   line-height: 36px;
   letter-spacing: 0px;
   text-align: left;
-  max-width: 107px;
+  max-width: 90px;
   color: ${({ theme }) => theme.customColors.white1};
 `
 

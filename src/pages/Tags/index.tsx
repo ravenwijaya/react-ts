@@ -1,7 +1,10 @@
+import { CSSProperties } from 'react'
+import { Box } from '@mui/material'
 import { deviceType } from '../../utils/media'
 import { User, useFetchTagsQuery } from '../../store/apis/tagApi'
 import {
   BaseContainer,
+  ContentContainer,
   CountText,
   ItemContainer,
   ItemLogo,
@@ -12,11 +15,15 @@ import {
   TextContainer,
   Title,
 } from './styled.components'
+import MasonryComponent from '../../components/List/grid'
 
-const renderTags = (tags: User[]) => (
-  <>
-    {tags?.map((item: User) => (
-      <ItemContainer>
+const spacer = 24
+const height = 199 + 36 - spacer
+
+const renderTags = (item: User, style: CSSProperties) => (
+  <Box style={style} id="boxxxx">
+    <ItemContainer height={height}>
+      <ContentContainer>
         <ItemLogoContainer>
           <ItemLogo>
             <ItemText noWrap>{item.name}</ItemText>
@@ -26,16 +33,28 @@ const renderTags = (tags: User[]) => (
           <TagText noWrap>{item.name}</TagText>
           <CountText>{item.count} Results</CountText>
         </TextContainer>
-      </ItemContainer>
-    ))}
-  </>
+      </ContentContainer>
+    </ItemContainer>
+  </Box>
 )
+
 const Tags = () => {
   const { data: tagsResponse } = useFetchTagsQuery({})
+  const isMobile = !deviceType.giant()
+
   return (
     <BaseContainer>
       <Title variant={deviceType.giant() ? 'h4' : 'h5'}>Tags</Title>
-      <ListContainer>{renderTags(tagsResponse)}</ListContainer>
+      <ListContainer>
+        <MasonryComponent<User>
+          defaultHeight={height}
+          defaultWidth={150}
+          columnCount={isMobile ? 2 : 5}
+          spacer={24}
+          items={tagsResponse ?? []}
+          renderContent={renderTags}
+        />
+      </ListContainer>
     </BaseContainer>
   )
 }
