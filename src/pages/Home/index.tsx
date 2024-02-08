@@ -2,6 +2,7 @@ import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
 import { useState, ReactNode, CSSProperties } from 'react'
 import { Box, useMediaQuery } from '@mui/material'
 import Skeleton from '@mui/material/Skeleton'
+import SearchUser from '../../components/Home/SearchUser'
 import Icon from '../../components/UI/Icon'
 import { deviceType } from '../../utils/media'
 import { BUTTON_VARIANTS, ICON_NAMES } from '../../constants/core'
@@ -9,7 +10,7 @@ import {
   User,
   useFetchFollowersQuery,
   useFetchFollowingQuery,
-  // useFetchUsersQuery,
+  useFetchUsersQuery,
 } from '../../store/apis/userApi'
 import InputSlider from '../../components/UI/InputSlider'
 import { theme } from '../../theme/theme'
@@ -34,10 +35,13 @@ import {
   StyledAvatar,
   UserContainer,
   Username,
+  ListResultContainer,
+  ListResultWrapper,
 } from './styled.components'
 import { Hidden } from '../../components/UI/Hidden'
 import ItemList from '../../components/List'
 import Button from '../../components/UI/Button'
+import MasonryComponent from '../../components/MasonryGrid'
 
 interface FormInput {
   search: string
@@ -113,6 +117,10 @@ const renderUser: RenderUserFunction = (item, style, key) => (
   </Box>
 )
 
+const renderSearchUser = (item: User, width: number, height: number) => (
+  <SearchUser item={item} width={width} height={height} />
+)
+
 const Home = () => {
   const isDesktop = useMediaQuery(deviceType.desktop)
   const [value, setValue] = useState(1)
@@ -126,18 +134,18 @@ const Home = () => {
     page: 1,
     pageSize: 15,
   })
-  // const [fetchUsersArgs, setFetchUsersArgs] = useState({
-  //   page: 1,
-  //   pageSize: 15,
-  //   keyword: '',
-  // })
+  const [fetchUsersArgs, setFetchUsersArgs] = useState({
+    page: 1,
+    pageSize: 15,
+    keyword: '',
+  })
 
   const { data: responseFollowers, isFetching: isFetchingFollowers } =
     useFetchFollowersQuery(fetchFollowersArgs)
   const { data: responseFollowing, isFetching: isFetchingFollowing } =
     useFetchFollowingQuery(fetchFollowingArgs)
-  // const { data: responseUsers, isFetching: isFetchingUsers } =
-  //   useFetchUsersQuery(fetchUsersArgs)
+  const { data: responseUsers, isFetching: isFetchingUsers } =
+    useFetchUsersQuery(fetchUsersArgs)
 
   const handleFetchFollowers = () => {
     setFetchFollowersArgs((prev) => ({ ...prev, page: prev.page + 1 }))
@@ -145,9 +153,9 @@ const Home = () => {
   const handleFetchFollowing = () => {
     setFetchFollowingArgs((prev) => ({ ...prev, page: prev.page + 1 }))
   }
-  // const handleFetchUsers = () => {
-  //   setFetchUsersArgs((prev) => ({ ...prev, page: prev.page + 1 }))
-  // }
+  const handleFetchUsers = () => {
+    setFetchUsersArgs((prev) => ({ ...prev, page: prev.page + 1 }))
+  }
 
   const onSubmit: SubmitHandler<FieldValues> = (inputData) => {
     setShowResult(true)
@@ -164,7 +172,7 @@ const Home = () => {
   return (
     <BaseContainer>
       {showResult ? (
-        <SettingContainer>
+        <SettingContainer id="xxx">
           <SearchContainer>
             <Title variant="h5">Search</Title>
             <Input
@@ -190,13 +198,38 @@ const Home = () => {
       ) : (
         <ResultContainer>
           <HeaderContainer>
-            <Icon name={ICON_NAMES.CHEVRON_LEFT} width={12.77} height={21.67} />
+            <Hidden only={['xsmall', 'small', 'medium', 'large']}>
+              <Icon
+                name={ICON_NAMES.CHEVRON_LEFT}
+                width={12.77}
+                height={21.67}
+              />
+            </Hidden>
             <Title variant={isDesktop ? 'h4' : 'h5'}>Results</Title>
           </HeaderContainer>
+          <ListResultWrapper>
+            <ListResultContainer>
+              <MasonryComponent<User>
+                defaultHeight={isDesktop ? 197 : 282}
+                defaultWidth={isDesktop ? 219 : 335}
+                columnCount={isDesktop ? 3 : 2}
+                ySpacer={34}
+                xSpacer={31}
+                items={responseUsers?.data}
+                renderContent={renderSearchUser}
+                total={responseUsers?.length}
+                isEnd={
+                  fetchFollowersArgs.page === responseFollowers?.totalPages
+                }
+                isLoading={isFetchingUsers}
+                handleNextPage={handleFetchUsers}
+              />
+            </ListResultContainer>
+          </ListResultWrapper>
         </ResultContainer>
       )}
       <Hidden only={['xsmall', 'small', 'medium', 'large']}>
-        <ListContainer>
+        <ListContainer id="ssssss">
           <StyledTabs onChange={handleTabChange} value={value}>
             <TabsList>
               <Tab value={1}>Followers</Tab>

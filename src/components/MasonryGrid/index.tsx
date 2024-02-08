@@ -1,9 +1,11 @@
-import { CSSProperties, useRef } from 'react'
+import Box from '@mui/material/Box'
+import { useRef } from 'react'
 import {
   AutoSizer,
   CellMeasurer,
   CellMeasurerCache,
   CellRenderer,
+  InfiniteLoader,
   KeyMapper,
   Masonry,
   Positioner,
@@ -17,51 +19,72 @@ interface Props<T> {
   columnCount: number
   defaultWidth: number
   defaultHeight: number
-  spacer: number
-  renderContent: (item: T, style: CSSProperties) => JSX.Element
-  wrapperStyle?: CSSProperties
+  total: number
+  handleNextPage?: () => void
+  isLoading?: boolean
+  isEnd?: boolean
+  renderContent: (item: T, width: number, height: number) => JSX.Element
+  ySpacer: number
+  xSpacer: number
 }
 
 function MasonryComponent<T>({
-  items,
+  items = [],
   columnCount,
   defaultWidth,
   defaultHeight,
-  spacer,
+  total = 10,
+  handleNextPage,
+  isLoading,
+  isEnd,
   renderContent,
-  wrapperStyle,
+  ySpacer,
+  xSpacer,
 }: Props<T>) {
   const cacheRef = useRef<CellMeasurerCache | null>(null)
   const cellPositionerRef = useRef<Positioner | null>(null)
+  const maxColumn = useRef<number>(columnCount)
   const masonryRef = useRef<Masonry>(null)
+  const spacer = ySpacer < xSpacer ? ySpacer : xSpacer
+  let customHeight = defaultHeight
+  let customWidth = defaultWidth
+  if (spacer === ySpacer) {
+    // ySpacer lesser need to add more height
+    customHeight = defaultHeight + xSpacer - ySpacer
+  } else {
+    // xSpacer lesser need to add more width
+    customWidth = defaultWidth + ySpacer - xSpacer
+  }
 
   const columnCountFor = (availableWidth: number) =>
-    Math.floor(availableWidth / (defaultWidth + spacer))
+    Math.round(availableWidth / (customWidth + spacer))
 
   if (!cacheRef.current) {
     cacheRef.current = new CellMeasurerCache({
-      defaultHeight,
-      defaultWidth,
+      defaultHeight: customHeight,
+      defaultWidth: customWidth,
       fixedWidth: true,
     })
 
     cellPositionerRef.current = createMasonryCellPositioner({
       cellMeasurerCache: cacheRef.current,
       columnCount,
-      columnWidth: defaultWidth,
+      columnWidth: customWidth,
       spacer,
     })
   }
 
   const onResize = ({ width }: { width: number }) => {
     if (!cellPositionerRef.current) return
+    const maxItems = columnCountFor(width)
     cellPositionerRef.current.reset({
       columnCount: columnCountFor(width),
-      columnWidth: defaultWidth,
+      columnWidth: customWidth,
       spacer,
     })
     if (!masonryRef.current) return
     masonryRef.current.recomputeCellPositions()
+    maxColumn.current = maxItems
   }
 
   const cellRenderer: CellRenderer = ({ index, key, parent, style }) => {
@@ -73,45 +96,47 @@ function MasonryComponent<T>({
         key={key}
         parent={parent}
       >
-        {renderContent(item, style as CSSProperties)}
-        {/* <div style={{ ...style }}>
-        <img
-          src={
-            'https://venturebeat.com/wp-content/uploads/2017/03/ShopChat-e1506572472915.jpg'
-          }
-          style={{
-            height: defaultHeight,
-            width: defaultWidth,
-            display: 'block',
-            objectFit: 'cover',
-          }}
-        />
-      </div> */}
+        <Box style={style}>
+          {renderContent(item, customWidth, customHeight)}
+        </Box>
       </CellMeasurer>
     )
+  }
+  const isRowLoaded = ({ index }: { index: number }) => !!items[index]
+  const loadMoreRows = async () => {
+    if (isLoading || isEnd || !handleNextPage) return
+    handleNextPage()
   }
 
   return (
     <AutoSizer onResize={onResize}>
-      {({ width, height }: { width: number; height: number }) => {
-        if (!cacheRef.current || !cellPositionerRef.current) {
-          return null
-        }
-        return (
-          <Masonry
-            style={wrapperStyle}
-            autoHeight={false}
-            ref={masonryRef}
-            cellCount={items.length || 5}
-            cellMeasurerCache={cacheRef.current}
-            cellPositioner={cellPositionerRef.current}
-            cellRenderer={cellRenderer}
-            height={height}
-            width={width}
-            keyMapper={keyMapper}
-          />
-        )
-      }}
+      {({ width, height }: { width: number; height: number }) => (
+        <InfiniteLoader
+          isRowLoaded={isRowLoaded}
+          loadMoreRows={loadMoreRows}
+          rowCount={total}
+        >
+          {() => {
+            if (!cacheRef.current || !cellPositionerRef.current) {
+              return null
+            }
+            return (
+              <Masonry
+                style={{ height: `${height}px` }}
+                autoHeight={true}
+                ref={masonryRef}
+                cellCount={total || 5}
+                cellMeasurerCache={cacheRef.current}
+                cellPositioner={cellPositionerRef.current}
+                cellRenderer={cellRenderer}
+                height={height}
+                width={width}
+                keyMapper={keyMapper}
+              />
+            )
+          }}
+        </InfiniteLoader>
+      )}
     </AutoSizer>
   )
 }

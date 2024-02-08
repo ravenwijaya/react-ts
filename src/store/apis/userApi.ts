@@ -89,7 +89,7 @@ export const userApi = api.injectEndpoints({
         const queryParams = []
         if (page) queryParams.push(`page=${page}`)
         if (pageSize) queryParams.push(`pageSize=${pageSize}`)
-        if (keyword) queryParams.push(`pageSize=${keyword}`)
+        if (keyword) queryParams.push(`keyword=${keyword}`)
         return `/users/all?${queryParams.join('&')}`
       },
       serializeQueryArgs: ({ endpointName, queryArgs }) =>

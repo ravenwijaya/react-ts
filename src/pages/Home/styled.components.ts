@@ -119,18 +119,25 @@ export const TabsList = styled(BaseTabsList)(
 
 export const ResultContainer = styled(Box)`
   display: flex;
-  width: 100%;
+  flex: 1;
   flex-direction: column;
 `
+
 export const HeaderContainer = styled(Box)`
   display: flex;
-  background-color: red;
   align-items: center;
   gap: 25px;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-bottom: 24px;
   ${media.xlarge`
     padding-top: 92px;
     padding-left:92.5px;
   `}
+`
+export const ListResultContainer = styled(Box)`
+  display: flex;
+  flex: 1;
 `
 
 export const UserContainer = styled(Box)`
@@ -164,7 +171,6 @@ export const Name = styled(Typography)`
   line-height: 24px;
   letter-spacing: 0.15000000596046448px;
   text-align: left;
-  max-width: 130px;
 `
 export const Username = styled(Typography)`
   font-family: Ubuntu;
@@ -174,5 +180,13 @@ export const Username = styled(Typography)`
   line-height: 21px;
   letter-spacing: 0.25px;
   text-align: left;
-  max-width: 130px;
+`
+
+export const ListResultWrapper = styled(Box)`
+  display: flex;
+  flex: 1;
+  padding: 0px 20px;
+  ${media.xlarge`
+    padding:0px 130px;
+  `}
 `

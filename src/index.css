@@ -5,6 +5,10 @@ body {
   background-color: black;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 #root {
   height: 100%;
 }
