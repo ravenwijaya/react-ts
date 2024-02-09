@@ -5,14 +5,14 @@ import {
   ListRowRenderer,
 } from 'react-virtualized'
 import { CSSProperties, ReactNode } from 'react'
-import { ListContainer } from './styled.components'
+import { CircularProgress } from '@mui/material'
+import { ListContainer, LoaderContainer } from './styled.components'
 
 interface Props<T> {
   data: T[]
   total: number
   handleNextPage: () => void
   isLoading: boolean
-  isEnd: boolean
   renderContent: (item: T, style: CSSProperties, key: string) => ReactNode
 }
 
@@ -21,9 +21,9 @@ function ItemList<T>({
   total = 20,
   handleNextPage,
   isLoading,
-  isEnd,
   renderContent,
 }: Props<T>) {
+  const hasMore = data.length < total
   const rowRenderer: ListRowRenderer = ({ key, index, style }) => {
     const item = data[index]
     return renderContent(item, style, key)
@@ -34,35 +34,47 @@ function ItemList<T>({
   }
 
   const loadMoreRows = async () => {
-    if (isLoading || isEnd) return
+    if (isLoading || !hasMore) return
     handleNextPage()
   }
 
   return (
-    <ListContainer>
-      <AutoSizer>
-        {({ width, height }: { width: number; height: number }) => (
-          <InfiniteLoader
-            isRowLoaded={isRowLoaded}
-            loadMoreRows={loadMoreRows}
-            rowCount={total}
-            threshold={1}
-          >
-            {({ onRowsRendered, registerChild }) => (
-              <List
-                ref={registerChild}
-                height={height}
-                onRowsRendered={onRowsRendered}
-                rowCount={total}
-                rowHeight={61}
-                rowRenderer={rowRenderer}
-                width={width}
-              />
-            )}
-          </InfiniteLoader>
-        )}
-      </AutoSizer>
-    </ListContainer>
+    <>
+      {!data.length && (
+        <LoaderContainer>
+          <CircularProgress />
+        </LoaderContainer>
+      )}
+      <ListContainer>
+        <AutoSizer>
+          {({ width, height }: { width: number; height: number }) => (
+            <InfiniteLoader
+              isRowLoaded={isRowLoaded}
+              loadMoreRows={loadMoreRows}
+              threshold={1}
+              rowCount={hasMore ? data.length + 1 : data.length}
+            >
+              {({ onRowsRendered, registerChild }) => (
+                <List
+                  ref={registerChild}
+                  height={height}
+                  onRowsRendered={onRowsRendered}
+                  rowCount={data.length}
+                  rowHeight={61}
+                  rowRenderer={rowRenderer}
+                  width={width}
+                />
+              )}
+            </InfiniteLoader>
+          )}
+        </AutoSizer>
+      </ListContainer>
+      {isLoading && data.length && (
+        <LoaderContainer>
+          <CircularProgress />
+        </LoaderContainer>
+      )}
+    </>
   )
 }
 

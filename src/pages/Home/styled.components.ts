@@ -188,5 +188,6 @@ export const ListResultWrapper = styled(Box)`
   padding: 0px 20px;
   ${media.xlarge`
     padding:0px 130px;
+    padding-bottom:12px;
   `}
 `

@@ -22,7 +22,6 @@ interface Props<T> {
   total: number
   handleNextPage?: () => void
   isLoading?: boolean
-  isEnd?: boolean
   renderContent: (item: T, width: number, height: number) => JSX.Element
   ySpacer: number
   xSpacer: number
@@ -33,14 +32,14 @@ function MasonryComponent<T>({
   columnCount,
   defaultWidth,
   defaultHeight,
-  total = 10,
+  total = 5,
   handleNextPage,
   isLoading,
-  isEnd,
   renderContent,
   ySpacer,
   xSpacer,
 }: Props<T>) {
+  const hasMore = items.length < total
   const cacheRef = useRef<CellMeasurerCache | null>(null)
   const cellPositionerRef = useRef<Positioner | null>(null)
   const maxColumn = useRef<number>(columnCount)
@@ -56,8 +55,12 @@ function MasonryComponent<T>({
     customWidth = defaultWidth + ySpacer - xSpacer
   }
 
-  const columnCountFor = (availableWidth: number) =>
-    Math.round(availableWidth / (customWidth + spacer))
+  const columnCountFor = (availableWidth: number) => {
+    const res = availableWidth / (customWidth + spacer)
+    const decimal = res - Math.floor(res)
+    const rounded = decimal > 0.8 ? Math.round(res) : Math.floor(res)
+    return rounded
+  }
 
   if (!cacheRef.current) {
     cacheRef.current = new CellMeasurerCache({
@@ -104,19 +107,18 @@ function MasonryComponent<T>({
   }
   const isRowLoaded = ({ index }: { index: number }) => !!items[index]
   const loadMoreRows = async () => {
-    if (isLoading || isEnd || !handleNextPage) return
+    if (isLoading || !hasMore || !handleNextPage) return
     handleNextPage()
   }
-
   return (
-    <AutoSizer onResize={onResize}>
-      {({ width, height }: { width: number; height: number }) => (
-        <InfiniteLoader
-          isRowLoaded={isRowLoaded}
-          loadMoreRows={loadMoreRows}
-          rowCount={total}
-        >
-          {() => {
+    <InfiniteLoader
+      isRowLoaded={isRowLoaded}
+      loadMoreRows={loadMoreRows}
+      rowCount={hasMore ? items.length + 1 : items.length}
+    >
+      {({ onRowsRendered }) => (
+        <AutoSizer onResize={onResize}>
+          {({ width, height }: { width: number; height: number }) => {
             if (!cacheRef.current || !cellPositionerRef.current) {
               return null
             }
@@ -125,19 +127,20 @@ function MasonryComponent<T>({
                 style={{ height: `${height}px` }}
                 autoHeight={true}
                 ref={masonryRef}
-                cellCount={total || 5}
+                cellCount={items.length}
                 cellMeasurerCache={cacheRef.current}
                 cellPositioner={cellPositionerRef.current}
                 cellRenderer={cellRenderer}
+                onCellsRendered={onRowsRendered}
                 height={height}
                 width={width}
                 keyMapper={keyMapper}
               />
             )
           }}
-        </InfiniteLoader>
+        </AutoSizer>
       )}
-    </AutoSizer>
+    </InfiniteLoader>
   )
 }
 

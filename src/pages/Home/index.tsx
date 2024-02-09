@@ -136,7 +136,7 @@ const Home = () => {
   })
   const [fetchUsersArgs, setFetchUsersArgs] = useState({
     page: 1,
-    pageSize: 15,
+    pageSize: 10,
     keyword: '',
   })
 
@@ -217,10 +217,7 @@ const Home = () => {
                 xSpacer={31}
                 items={responseUsers?.data}
                 renderContent={renderSearchUser}
-                total={responseUsers?.length}
-                isEnd={
-                  fetchFollowersArgs.page === responseFollowers?.totalPages
-                }
+                total={responseUsers?.total}
                 isLoading={isFetchingUsers}
                 handleNextPage={handleFetchUsers}
               />
@@ -240,9 +237,6 @@ const Home = () => {
                 data={responseFollowers?.data}
                 total={responseFollowers?.total}
                 isLoading={isFetchingFollowers}
-                isEnd={
-                  fetchFollowersArgs.page === responseFollowers?.totalPages
-                }
                 handleNextPage={handleFetchFollowers}
                 renderContent={renderUser}
               ></ItemList>
@@ -252,9 +246,6 @@ const Home = () => {
                 data={responseFollowing?.data}
                 total={responseFollowing?.total}
                 isLoading={isFetchingFollowing}
-                isEnd={
-                  fetchFollowingArgs.page === responseFollowing?.totalPages
-                }
                 handleNextPage={handleFetchFollowing}
                 renderContent={renderUser}
               ></ItemList>
