@@ -9,13 +9,13 @@ export const MainContainer = styled(Box)`
   background-color: ${({ theme }) => theme.customColors.black1};
 `
 
-export const FlexContainer = styled(Box)`
+export const FlexContainer = styled(Box)<{ showMenu: boolean }>`
   display: flex;
   flex: 1;
   flex-direction: column;
   overflow-y: auto;
   padding-top: 70px;
-  padding-bottom: 66px;
+  padding-bottom: ${({ showMenu }) => (showMenu ? '66px' : '0px')};
   ${media.xlarge`
     padding-top:0px;
     padding-bottom:0px;

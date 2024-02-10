@@ -13,27 +13,6 @@ export const BaseContainer = styled(Box)`
   flex-direction: row;
   background-color: ${({ theme }) => theme.customColors.black1};
 `
-export const SettingContainer = styled(Box)`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  padding: 0px 20px;
-  ${media.xlarge`
-    padding:54px 130px 87px 130px;
-  `}
-`
-export const SearchContainer = styled(Box)`
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  gap: 16px;
-  padding-bottom: 28px;
-  ${media.xlarge`
-    padding-bottom:30px;
-    gap:20px;
-    border-bottom:1px solid ${({ theme }) => theme.customColors.white1};
-  `}
-`
 
 export const Title = styled(Typography)`
   font-family: Ubuntu;
@@ -43,20 +22,7 @@ export const Title = styled(Typography)`
   line-height: 36px;
   letter-spacing: 0px;
 `
-export const LimitContainer = styled(Box)`
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  gap: 16px;
-  padding-bottom: 28px;
-  background-color: red;
-  ${media.xlarge`
-    padding-top:30px;
-    padding-bottom:30px;
-    gap:20px;
-    border-bottom:1px solid ${({ theme }) => theme.customColors.white1};
-  `}
-`
+
 export const ListContainer = styled(Box)`
   display: flex;
   width: 375px;
@@ -114,3 +80,36 @@ export const TabsList = styled(BaseTabsList)(
   background-color:${theme.customColors.black1};
   `,
 )
+
+export const ResultContainer = styled(Box)`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+`
+
+export const HeaderContainer = styled(Box)`
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-bottom: 24px;
+  ${media.xlarge`
+    padding-top: 92px;
+    padding-left:92.5px;
+  `}
+`
+export const ListResultContainer = styled(Box)`
+  display: flex;
+  flex: 1;
+`
+
+export const ContentContainer = styled(Box)`
+  display: flex;
+  flex: 1;
+  padding: 0px 20px;
+  ${media.xlarge`
+    padding:0px 130px;
+    padding-bottom:12px;
+  `}
+`

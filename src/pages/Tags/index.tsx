@@ -1,64 +1,18 @@
-import { Skeleton, useMediaQuery } from '@mui/material'
-import { theme } from '../../theme/theme'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import TagItem from '../../components/Tags/TagItem'
 import { deviceType } from '../../utils/media'
 import { Tag, useFetchTagsQuery } from '../../store/apis/tagApi'
 import {
   BaseContainer,
-  ContentContainer,
-  CountText,
   HeaderContainer,
-  ItemContainer,
-  ItemLogo,
-  ItemLogoContainer,
-  ItemText,
   ListContainer,
-  TagText,
-  TextContainer,
   Title,
   Wrapper,
 } from './styled.components'
 import MasonryComponent from '../../components/MasonryGrid'
 
 const renderTags = (item: Tag, width: number, height: number) => (
-  <ItemContainer width={width} height={height}>
-    <ContentContainer>
-      {item ? (
-        <ItemLogoContainer>
-          <ItemLogo>
-            <ItemText noWrap>{item?.name}</ItemText>
-          </ItemLogo>
-        </ItemLogoContainer>
-      ) : (
-        <Skeleton
-          variant="rectangular"
-          width={150}
-          height={150}
-          sx={{ bgcolor: theme.customColors.white3 }}
-        />
-      )}
-      <TextContainer>
-        {item ? (
-          <>
-            <TagText noWrap>{item?.name}</TagText>
-            <CountText>{item?.count} Results</CountText>
-          </>
-        ) : (
-          <>
-            <Skeleton
-              variant="rectangular"
-              width={120}
-              sx={{ bgcolor: theme.customColors.white3 }}
-            />
-            <Skeleton
-              variant="rectangular"
-              width={50}
-              sx={{ bgcolor: theme.customColors.white3 }}
-            />
-          </>
-        )}
-      </TextContainer>
-    </ContentContainer>
-  </ItemContainer>
+  <TagItem item={item} width={width} height={height} />
 )
 
 const Tags = () => {
@@ -77,8 +31,8 @@ const Tags = () => {
             defaultHeight={199}
             defaultWidth={150}
             columnCount={isDesktop ? 5 : 2}
-            ySpacer={24}
-            xSpacer={36}
+            ySpacer={isDesktop ? 24 : 24}
+            xSpacer={isDesktop ? 36 : 24}
             items={tagsResponse ?? []}
             renderContent={renderTags}
             total={tagsResponse?.length}

@@ -5,7 +5,7 @@ import {
   ListRowRenderer,
 } from 'react-virtualized'
 import { CSSProperties, ReactNode } from 'react'
-import { CircularProgress } from '@mui/material'
+import CircularProgress from '@mui/material/CircularProgress'
 import { ListContainer, LoaderContainer } from './styled.components'
 
 interface Props<T> {

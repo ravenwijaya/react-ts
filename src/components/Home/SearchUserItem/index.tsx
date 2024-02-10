@@ -15,7 +15,7 @@ interface Props {
   width: number
   height: number
 }
-const SearchUser = ({ item, width, height }: Props) => (
+const SearchUserItem = ({ item, width, height }: Props) => (
   <ItemContainer width={width} height={height}>
     <ContentContainer>
       <ImageContainer>
@@ -65,4 +65,4 @@ const SearchUser = ({ item, width, height }: Props) => (
     </ContentContainer>
   </ItemContainer>
 )
-export default SearchUser
+export default SearchUserItem

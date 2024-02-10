@@ -1,44 +1,50 @@
-import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
 import { CSSProperties, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import UserItem from '../../components/Home/UserItem'
-import { BUTTON_VARIANTS, ROUTES } from '../../constants/core'
+import Icon from '../../components/UI/Icon'
+import { deviceType } from '../../utils/media'
+import { ICON_NAMES, ROUTES } from '../../constants/core'
 import {
   User,
   useFetchFollowersQuery,
   useFetchFollowingQuery,
+  useFetchUsersQuery,
 } from '../../store/apis/userApi'
-import InputSlider from '../../components/UI/InputSlider'
-import { theme } from '../../theme/theme'
-import Input from '../../components/UI/Input'
 import {
   BaseContainer,
-  LimitContainer,
   ListContainer,
-  SearchContainer,
-  SettingContainer,
   Tab,
   TabPanel,
   StyledTabs,
   TabsList,
   Title,
+  ResultContainer,
+  HeaderContainer,
+  ListResultContainer,
+  ContentContainer,
 } from './styled.components'
 import { Hidden } from '../../components/UI/Hidden'
 import ItemList from '../../components/List'
-import Button from '../../components/UI/Button'
-
-interface FormInput {
-  search: string
-}
+import MasonryComponent from '../../components/MasonryGrid'
+import SearchUserItem from '../../components/Home/SearchUserItem'
 
 const renderUser = (item: User, style: CSSProperties, key: string) => (
   <UserItem item={item} style={style} key={key} />
 )
 
-const Home = () => {
+const renderSearchUser = (item: User, width: number, height: number) => (
+  <SearchUserItem item={item} width={width} height={height} />
+)
+
+const Results = () => {
+  const [searchParams] = useSearchParams()
+  const size = searchParams.get('size')
+  const keyword = searchParams.get('keyword')
+
+  const isDesktop = useMediaQuery(deviceType.desktop)
   const navigate = useNavigate()
   const [value, setValue] = useState(1)
-  const { handleSubmit, control } = useForm()
 
   const [fetchFollowersArgs, setFetchFollowersArgs] = useState({
     page: 1,
@@ -48,11 +54,18 @@ const Home = () => {
     page: 1,
     pageSize: 15,
   })
+  const [fetchUsersArgs, setFetchUsersArgs] = useState({
+    page: 1,
+    pageSize: size,
+    keyword,
+  })
 
   const { data: responseFollowers, isFetching: isFetchingFollowers } =
     useFetchFollowersQuery(fetchFollowersArgs)
   const { data: responseFollowing, isFetching: isFetchingFollowing } =
     useFetchFollowingQuery(fetchFollowingArgs)
+  const { data: responseUsers, isFetching: isFetchingUsers } =
+    useFetchUsersQuery(fetchUsersArgs)
 
   const handleFetchFollowers = () => {
     setFetchFollowersArgs((prev) => ({ ...prev, page: prev.page + 1 }))
@@ -60,14 +73,8 @@ const Home = () => {
   const handleFetchFollowing = () => {
     setFetchFollowingArgs((prev) => ({ ...prev, page: prev.page + 1 }))
   }
-
-  const onSubmit: SubmitHandler<FieldValues> = (inputData) => {
-    const inputValues = inputData as FormInput
-    const queryParams = []
-    if (true) queryParams.push(`size=20`)
-    if (false) queryParams.push(`keyword=''`)
-    console.log(inputValues)
-    navigate({ pathname: ROUTES.RESULTS, search: queryParams.join('&') })
+  const handleFetchUsers = () => {
+    setFetchUsersArgs((prev) => ({ ...prev, page: prev.page + 1 }))
   }
 
   const handleTabChange = (
@@ -78,30 +85,32 @@ const Home = () => {
   }
   return (
     <BaseContainer>
-      <SettingContainer>
-        <SearchContainer>
-          <Title variant="h5">Search</Title>
-          <Input
-            name="search"
-            placeholder="keyword"
-            control={control}
-            borderColor={theme.customColors.white2}
-            textColor={theme.customColors.white1}
-          />
-        </SearchContainer>
-        <LimitContainer>
-          <Title variant="h5"># Of Results Per Page</Title>
-          <InputSlider />
-        </LimitContainer>
-        <Button
-          style={{ marginTop: 'auto' }}
-          onClick={handleSubmit(onSubmit)}
-          variant={BUTTON_VARIANTS.NORMAL}
+      <ResultContainer>
+        <HeaderContainer
+          onClick={() => navigate(ROUTES.HOME, { replace: true })}
         >
-          Submit
-        </Button>
-      </SettingContainer>
-
+          <Hidden only={['xsmall', 'small', 'medium', 'large']}>
+            <Icon name={ICON_NAMES.CHEVRON_LEFT} width={12.77} height={21.67} />
+          </Hidden>
+          <Title variant={isDesktop ? 'h4' : 'h5'}>Results</Title>
+        </HeaderContainer>
+        <ContentContainer>
+          <ListResultContainer>
+            <MasonryComponent<User>
+              defaultHeight={isDesktop ? 197 : 282}
+              defaultWidth={isDesktop ? 219 : 335}
+              columnCount={isDesktop ? 3 : 2}
+              ySpacer={34}
+              xSpacer={31}
+              items={responseUsers?.data}
+              renderContent={renderSearchUser}
+              total={responseUsers?.total}
+              isLoading={isFetchingUsers}
+              handleNextPage={handleFetchUsers}
+            />
+          </ListResultContainer>
+        </ContentContainer>
+      </ResultContainer>
       <Hidden only={['xsmall', 'small', 'medium', 'large']}>
         <ListContainer>
           <StyledTabs onChange={handleTabChange} value={value}>
@@ -134,4 +143,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Results

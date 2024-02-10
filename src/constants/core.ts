@@ -1,6 +1,7 @@
 export const ROUTES = {
   HOME: '/',
   TAGS: '/tags',
+  RESULTS: '/results',
 }
 export const ICON_NAMES = {
   LOGO: 'logo',

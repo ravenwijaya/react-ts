@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useMediaQuery } from '@mui/material'
+import useMediaQuery from '@mui/material/useMediaQuery'
 import Icon from '../../UI/Icon'
 import { ICON_NAMES, ROUTES } from '../../../constants/core'
 import { HeaderContainer, NavContainer, Title } from './styled.components'
