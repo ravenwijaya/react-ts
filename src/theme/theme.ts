@@ -16,8 +16,10 @@ export interface CustomTheme {
 const customColors = {
   black1: '#121212',
   white1: '#FFFFFF',
-  white2: '#FFFFFF80',
+  white2: '#FFFFFF80', // 50%
   white3: '#FFFFFF0F',
+  white4: '#FFFFFF4D', // 30%
+  white5: '#FFFFFF1A', // 10%
   red1: '#B02121',
   grey1: '#1B1B1B',
   grey2: '#6A6A6A',
@@ -27,9 +29,11 @@ const customColors = {
   grey6: '#B2B2B2',
   blue1: '#00D1FF',
   orange1: '#FF9B33',
+  yellow1: '#FFD05D',
 }
 const fontWeight = {
   regular: 400,
+  medium: 500,
   semiBold: 600,
   bold: 700,
 }

@@ -8,10 +8,11 @@ export const ListContainer = styled(Box)`
   flex-direction: column;
   padding-top: 32px;
 `
+
 export const LoaderContainer = styled(Box)`
   display: flex;
   flex: 1;
   justify-content: center;
-  padding-top: 12px;
-  padding-bottom: 12px;
+  align-items: center;
+  padding: 12px 0;
 `

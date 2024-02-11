@@ -6,7 +6,7 @@ export const HeaderContainer = styled(Box)<{ showNav: boolean }>`
   display: flex;
   align-items: center;
   position: fixed;
-  top: 0px;
+  top: 0;
   width: 100%;
   z-index: 99;
   background-color: ${({ theme }) => theme.customColors.black1};
@@ -25,7 +25,7 @@ export const Title = styled(Typography)`
   font-size: 24px;
   font-weight: ${({ theme }) => theme.fontWeight.regular};
   line-height: 36px;
-  letter-spacing: 0px;
+  letter-spacing: 0;
   text-align: left;
   color: ${({ theme }) => theme.customColors.white1};
 `

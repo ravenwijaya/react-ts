@@ -6,15 +6,22 @@ import { HeaderContainer, NavContainer, Title } from './styled.components'
 import { deviceType } from '../../../utils/media'
 
 const Header = () => {
-  const { pathname } = useLocation()
+  const { pathname, state } = useLocation()
   const navigate = useNavigate()
   const isDesktop = useMediaQuery(deviceType.desktop)
 
   const showNavigation = !isDesktop && pathname !== ROUTES.HOME
+
+  const handleNavClick = () => {
+    if (showNavigation) {
+      navigate(ROUTES.HOME, { state, replace: true })
+    }
+  }
+
   return (
-    <HeaderContainer showNav={showNavigation}>
+    <HeaderContainer showNav={showNavigation} onClick={handleNavClick}>
       {showNavigation ? (
-        <NavContainer onClick={() => navigate(ROUTES.HOME, { replace: true })}>
+        <NavContainer>
           <Icon name={ICON_NAMES.CHEVRON_LEFT} width={12.77} height={21.67} />
           <Title variant="h5">Home Page</Title>
         </NavContainer>
@@ -24,4 +31,5 @@ const Header = () => {
     </HeaderContainer>
   )
 }
+
 export default Header

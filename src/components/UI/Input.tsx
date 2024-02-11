@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import InputBase from '@mui/material/InputBase'
 import Box from '@mui/material/Box'
-import { Control, Controller, FieldValues } from 'react-hook-form'
+import { Control, Controller, FieldValues, Path } from 'react-hook-form'
 import { useState } from 'react'
 import { theme as customTheme } from '../../theme/theme'
 
@@ -22,21 +22,21 @@ const StyledInput = styled(InputBase)<{ textColor: string }>`
   letter-spacing: 0.25px;
   text-align: left;
 `
-interface InputProps {
-  name: string
-  control: Control<FieldValues>
+interface InputProps<T extends FieldValues> {
+  name: Path<T>
+  control: Control<T>
   placeholder: string
   textColor?: string
   borderColor?: string
 }
 
-const Input = ({
+function Input<T extends FieldValues>({
   name,
   control,
   placeholder,
   textColor = 'black',
   borderColor = 'black',
-}: InputProps) => {
+}: InputProps<T>) {
   const [focus, setFocus] = useState(false)
 
   const changeFocus = () => {

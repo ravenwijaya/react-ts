@@ -1,6 +1,5 @@
 import Box from '@mui/material/Box'
 import Skeleton from '@mui/material/Skeleton'
-import { CSSProperties } from 'react'
 import { User } from '../../../store/apis/userApi'
 import Button from '../../UI/Button'
 import { BUTTON_VARIANTS } from '../../../constants/core'
@@ -17,7 +16,7 @@ import { theme } from '../../../theme/theme'
 
 interface Props {
   item: User
-  style: CSSProperties
+  style: React.CSSProperties
   key: string
 }
 
@@ -85,4 +84,5 @@ const UserItem = ({ item, style, key }: Props) => (
     </UserContainer>
   </Box>
 )
+
 export default UserItem

@@ -43,6 +43,12 @@ const MenuItem = ({ text, icon, isActive, onClick }: MenuItemProps) => (
 const Menu = () => {
   const { pathname } = useLocation()
   const navigate = useNavigate()
+
+  const items = [
+    { text: 'Home', route: ROUTES.HOME },
+    { text: 'Tags', route: ROUTES.TAGS },
+  ]
+
   return (
     <MenuContainer>
       <Hidden only={['xsmall', 'small', 'medium', 'large']}>
@@ -52,20 +58,21 @@ const Menu = () => {
       </Hidden>
 
       <ItemContainer>
-        <MenuItem
-          text="Home"
-          onClick={() => navigate(ROUTES.HOME)}
-          isActive={ROUTES.HOME === pathname}
-          icon={ICON_NAMES.UNION}
-        />
-        <MenuItem
-          text="Tags"
-          onClick={() => navigate(ROUTES.TAGS)}
-          isActive={ROUTES.TAGS === pathname}
-          icon={ICON_NAMES.UNION}
-        />
+        {items.map(({ text, route }) => (
+          <MenuItem
+            key={route}
+            text={text}
+            onClick={() => navigate(route)}
+            isActive={
+              pathname === route ||
+              (route === ROUTES.HOME && pathname === ROUTES.RESULTS)
+            }
+            icon={ICON_NAMES.UNION}
+          />
+        ))}
       </ItemContainer>
     </MenuContainer>
   )
 }
+
 export default Menu

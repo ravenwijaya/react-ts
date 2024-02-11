@@ -31,7 +31,7 @@ export const SearchContainer = styled(Box)`
   ${media.xlarge`
     padding-bottom:30px;
     gap:20px;
-    border-bottom:1px solid ${({ theme }) => theme.customColors.white1};
+    border-bottom:1px solid ${({ theme }) => theme.customColors.white5};
   `}
 `
 
@@ -43,18 +43,42 @@ export const Title = styled(Typography)`
   line-height: 36px;
   letter-spacing: 0px;
 `
+
+export const ResultContainer = styled(Box)`
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+`
+export const SizeText = styled(Typography)`
+  font-family: Ubuntu;
+  font-size: 48px;
+  font-weight: ${({ theme }) => theme.fontWeight.bold};
+  color: ${({ theme }) => theme.customColors.white1};
+  line-height: 72px;
+  letter-spacing: 0em;
+  text-align: left;
+`
+export const ResultText = styled(Typography)`
+  font-family: Ubuntu;
+  font-size: 16px;
+  font-weight: ${({ theme }) => theme.fontWeight.regular};
+  color: ${({ theme }) => theme.customColors.white1};
+  line-height: 24px;
+  letter-spacing: 0.15000000596046448px;
+  text-align: left;
+`
+
 export const LimitContainer = styled(Box)`
   display: flex;
   width: 100%;
   flex-direction: column;
   gap: 16px;
   padding-bottom: 28px;
-  background-color: red;
   ${media.xlarge`
     padding-top:30px;
-    padding-bottom:30px;
+    padding-bottom:60px;
     gap:20px;
-    border-bottom:1px solid ${({ theme }) => theme.customColors.white1};
+    border-bottom:1px solid ${({ theme }) => theme.customColors.white5};
   `}
 `
 export const ListContainer = styled(Box)`

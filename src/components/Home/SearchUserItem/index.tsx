@@ -1,4 +1,4 @@
-import { Skeleton } from '@mui/material'
+import Skeleton from '@mui/material/Skeleton'
 import { theme } from '../../../theme/theme'
 import { User } from '../../../store/apis/userApi'
 import {
@@ -15,6 +15,7 @@ interface Props {
   width: number
   height: number
 }
+
 const SearchUserItem = ({ item, width, height }: Props) => (
   <ItemContainer width={width} height={height}>
     <ContentContainer>
@@ -44,8 +45,8 @@ const SearchUserItem = ({ item, width, height }: Props) => (
       <FooterContainer>
         {item ? (
           <>
-            <Name>{item?.name}</Name>
-            <Username>by {item?.username}</Username>
+            <Name>{item.name}</Name>
+            <Username>by {item.username}</Username>
           </>
         ) : (
           <>
@@ -65,4 +66,5 @@ const SearchUserItem = ({ item, width, height }: Props) => (
     </ContentContainer>
   </ItemContainer>
 )
+
 export default SearchUserItem

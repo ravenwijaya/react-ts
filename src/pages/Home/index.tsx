@@ -1,6 +1,6 @@
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
-import { CSSProperties, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { CSSProperties, useCallback, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import UserItem from '../../components/Home/UserItem'
 import { BUTTON_VARIANTS, ROUTES } from '../../constants/core'
 import {
@@ -22,6 +22,9 @@ import {
   StyledTabs,
   TabsList,
   Title,
+  ResultContainer,
+  SizeText,
+  ResultText,
 } from './styled.components'
 import { Hidden } from '../../components/UI/Hidden'
 import ItemList from '../../components/List'
@@ -29,6 +32,7 @@ import Button from '../../components/UI/Button'
 
 interface FormInput {
   search: string
+  pageSize: number
 }
 
 const renderUser = (item: User, style: CSSProperties, key: string) => (
@@ -36,10 +40,16 @@ const renderUser = (item: User, style: CSSProperties, key: string) => (
 )
 
 const Home = () => {
+  const { state } = useLocation()
   const navigate = useNavigate()
   const [value, setValue] = useState(1)
-  const { handleSubmit, control } = useForm()
-
+  const { handleSubmit, control, watch } = useForm<FormInput>({
+    defaultValues: {
+      pageSize: state?.pageSize ?? 15,
+      search: state?.keyword ?? '',
+    },
+  })
+  const watchPageSize = watch('pageSize')
   const [fetchFollowersArgs, setFetchFollowersArgs] = useState({
     page: 1,
     pageSize: 15,
@@ -54,20 +64,20 @@ const Home = () => {
   const { data: responseFollowing, isFetching: isFetchingFollowing } =
     useFetchFollowingQuery(fetchFollowingArgs)
 
-  const handleFetchFollowers = () => {
+  const handleFetchFollowers = useCallback(() => {
     setFetchFollowersArgs((prev) => ({ ...prev, page: prev.page + 1 }))
-  }
-  const handleFetchFollowing = () => {
+  }, [])
+  const handleFetchFollowing = useCallback(() => {
     setFetchFollowingArgs((prev) => ({ ...prev, page: prev.page + 1 }))
-  }
+  }, [])
 
   const onSubmit: SubmitHandler<FieldValues> = (inputData) => {
-    const inputValues = inputData as FormInput
-    const queryParams = []
-    if (true) queryParams.push(`size=20`)
-    if (false) queryParams.push(`keyword=''`)
-    console.log(inputValues)
-    navigate({ pathname: ROUTES.RESULTS, search: queryParams.join('&') })
+    const { pageSize, search } = inputData as FormInput
+    const newState = {
+      ...(pageSize && { pageSize }),
+      ...(search && { keyword: search }),
+    }
+    navigate(ROUTES.RESULTS, { state: newState })
   }
 
   const handleTabChange = (
@@ -76,6 +86,7 @@ const Home = () => {
   ) => {
     setValue(newValue as number)
   }
+
   return (
     <BaseContainer>
       <SettingContainer>
@@ -91,7 +102,11 @@ const Home = () => {
         </SearchContainer>
         <LimitContainer>
           <Title variant="h5"># Of Results Per Page</Title>
-          <InputSlider />
+          <ResultContainer>
+            <SizeText variant="h3">{watchPageSize}</SizeText>
+            <ResultText>results</ResultText>
+          </ResultContainer>
+          <InputSlider name="pageSize" control={control} />
         </LimitContainer>
         <Button
           style={{ marginTop: 'auto' }}

@@ -3,11 +3,11 @@ import styled from 'styled-components'
 import Typography from '@mui/material/Typography'
 import media from '../../../utils/media'
 
-export const ItemContainer = styled(Box)`
-  flex-direction: column;
+export const ItemContainer = styled(Box)<{ width: number; height: number }>`
   display: flex;
-  width: ${({ width }) => `${width}`}px;
-  height: ${({ height }) => `${height}`}px;
+  flex-direction: column;
+  width: ${({ width }) => width}px;
+  height: ${({ height }) => height}px;
 `
 
 export const ContentContainer = styled(Box)`
@@ -16,8 +16,8 @@ export const ContentContainer = styled(Box)`
   width: 335px;
   height: 282px;
   ${media.xlarge`
-    width:219px;
-    height:197px;
+    width: 219px;
+    height: 197px;
   `}
 `
 
@@ -25,15 +25,17 @@ export const ImageContainer = styled(Box)`
   width: 335px;
   height: 222.67px;
   ${media.xlarge`
-  width:219px;
-  height:146px;
+    width: 219px;
+    height: 146px;
   `}
 `
+
 export const FooterContainer = styled(Box)`
   display: flex;
   flex-direction: column;
   margin-top: 12px;
 `
+
 export const Name = styled(Typography)`
   font-family: Ubuntu;
   font-size: 15px;
@@ -43,6 +45,7 @@ export const Name = styled(Typography)`
   text-align: left;
   color: ${({ theme }) => theme.customColors.white1};
 `
+
 export const Username = styled(Typography)`
   font-family: Ubuntu;
   font-size: 11px;

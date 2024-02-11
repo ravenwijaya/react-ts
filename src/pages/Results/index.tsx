@@ -1,6 +1,6 @@
-import { CSSProperties, useState } from 'react'
+import { CSSProperties, useCallback, useState } from 'react'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import UserItem from '../../components/Home/UserItem'
 import Icon from '../../components/UI/Icon'
 import { deviceType } from '../../utils/media'
@@ -38,9 +38,7 @@ const renderSearchUser = (item: User, width: number, height: number) => (
 )
 
 const Results = () => {
-  const [searchParams] = useSearchParams()
-  const size = searchParams.get('size')
-  const keyword = searchParams.get('keyword')
+  const { state } = useLocation()
 
   const isDesktop = useMediaQuery(deviceType.desktop)
   const navigate = useNavigate()
@@ -56,8 +54,8 @@ const Results = () => {
   })
   const [fetchUsersArgs, setFetchUsersArgs] = useState({
     page: 1,
-    pageSize: size,
-    keyword,
+    pageSize: state?.pageSize,
+    keyword: state?.keyword,
   })
 
   const { data: responseFollowers, isFetching: isFetchingFollowers } =
@@ -67,15 +65,15 @@ const Results = () => {
   const { data: responseUsers, isFetching: isFetchingUsers } =
     useFetchUsersQuery(fetchUsersArgs)
 
-  const handleFetchFollowers = () => {
+  const handleFetchFollowers = useCallback(() => {
     setFetchFollowersArgs((prev) => ({ ...prev, page: prev.page + 1 }))
-  }
-  const handleFetchFollowing = () => {
+  }, [])
+  const handleFetchFollowing = useCallback(() => {
     setFetchFollowingArgs((prev) => ({ ...prev, page: prev.page + 1 }))
-  }
-  const handleFetchUsers = () => {
+  }, [])
+  const handleFetchUsers = useCallback(() => {
     setFetchUsersArgs((prev) => ({ ...prev, page: prev.page + 1 }))
-  }
+  }, [])
 
   const handleTabChange = (
     event: React.SyntheticEvent<Element, Event> | null,
@@ -83,11 +81,12 @@ const Results = () => {
   ) => {
     setValue(newValue as number)
   }
+
   return (
     <BaseContainer>
       <ResultContainer>
         <HeaderContainer
-          onClick={() => navigate(ROUTES.HOME, { replace: true })}
+          onClick={() => navigate(ROUTES.HOME, { state, replace: true })}
         >
           <Hidden only={['xsmall', 'small', 'medium', 'large']}>
             <Icon name={ICON_NAMES.CHEVRON_LEFT} width={12.77} height={21.67} />

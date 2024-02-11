@@ -4,7 +4,7 @@ import {
   List,
   ListRowRenderer,
 } from 'react-virtualized'
-import { CSSProperties, ReactNode } from 'react'
+import { CSSProperties, ReactNode, memo } from 'react'
 import CircularProgress from '@mui/material/CircularProgress'
 import { ListContainer, LoaderContainer } from './styled.components'
 
@@ -16,35 +16,28 @@ interface Props<T> {
   renderContent: (item: T, style: CSSProperties, key: string) => ReactNode
 }
 
-function ItemList<T>({
+const ItemList = <T,>({
   data = [],
   total = 20,
   handleNextPage,
   isLoading,
   renderContent,
-}: Props<T>) {
+}: Props<T>) => {
   const hasMore = data.length < total
+
   const rowRenderer: ListRowRenderer = ({ key, index, style }) => {
     const item = data[index]
     return renderContent(item, style, key)
   }
 
-  function isRowLoaded({ index }: { index: number }) {
-    return !!data[index]
-  }
+  const isRowLoaded = ({ index }: { index: number }) => !!data[index]
 
   const loadMoreRows = async () => {
     if (isLoading || !hasMore) return
     handleNextPage()
   }
-
   return (
     <>
-      {!data.length && (
-        <LoaderContainer>
-          <CircularProgress />
-        </LoaderContainer>
-      )}
       <ListContainer>
         <AutoSizer>
           {({ width, height }: { width: number; height: number }) => (
@@ -59,7 +52,7 @@ function ItemList<T>({
                   ref={registerChild}
                   height={height}
                   onRowsRendered={onRowsRendered}
-                  rowCount={data.length}
+                  rowCount={data.length || total}
                   rowHeight={61}
                   rowRenderer={rowRenderer}
                   width={width}
@@ -69,7 +62,8 @@ function ItemList<T>({
           )}
         </AutoSizer>
       </ListContainer>
-      {isLoading && data.length && (
+
+      {isLoading && data.length > 0 && (
         <LoaderContainer>
           <CircularProgress />
         </LoaderContainer>
@@ -78,4 +72,4 @@ function ItemList<T>({
   )
 }
 
-export default ItemList
+export default memo(ItemList) as <T>(props: Props<T>) => JSX.Element

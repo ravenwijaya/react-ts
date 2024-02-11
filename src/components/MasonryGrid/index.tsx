@@ -1,18 +1,17 @@
+import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
-import { useRef } from 'react'
+import { memo, useRef } from 'react'
 import {
   AutoSizer,
   CellMeasurer,
   CellMeasurerCache,
   CellRenderer,
   InfiniteLoader,
-  KeyMapper,
   Masonry,
   Positioner,
   createMasonryCellPositioner,
 } from 'react-virtualized'
-
-const keyMapper: KeyMapper = (index) => index
+import { theme } from '../../theme/theme'
 
 interface Props<T> {
   items: T[]
@@ -32,7 +31,7 @@ function MasonryComponent<T>({
   columnCount,
   defaultWidth,
   defaultHeight,
-  total = 5,
+  total = 1,
   handleNextPage,
   isLoading,
   renderContent,
@@ -42,18 +41,12 @@ function MasonryComponent<T>({
   const hasMore = items.length < total
   const cacheRef = useRef<CellMeasurerCache | null>(null)
   const cellPositionerRef = useRef<Positioner | null>(null)
-  const maxColumn = useRef<number>(columnCount)
   const masonryRef = useRef<Masonry>(null)
   const spacer = ySpacer < xSpacer ? ySpacer : xSpacer
-  let customHeight = defaultHeight
-  let customWidth = defaultWidth
-  if (spacer === ySpacer) {
-    // ySpacer lesser need to add more height
-    customHeight = defaultHeight + xSpacer - ySpacer
-  } else {
-    // xSpacer lesser need to add more width
-    customWidth = defaultWidth + ySpacer - xSpacer
-  }
+  const customHeight =
+    ySpacer < xSpacer ? defaultHeight + xSpacer - ySpacer : defaultHeight
+  const customWidth =
+    ySpacer >= xSpacer ? defaultWidth + ySpacer - xSpacer : defaultWidth
 
   const columnCountFor = (availableWidth: number) => {
     const res = availableWidth / (customWidth + spacer)
@@ -78,16 +71,14 @@ function MasonryComponent<T>({
   }
 
   const onResize = ({ width }: { width: number }) => {
-    if (!cellPositionerRef.current) return
+    if (!cellPositionerRef.current || !masonryRef.current) return
     const maxItems = columnCountFor(width)
     cellPositionerRef.current.reset({
-      columnCount: columnCountFor(width),
+      columnCount: maxItems,
       columnWidth: customWidth,
       spacer,
     })
-    if (!masonryRef.current) return
     masonryRef.current.recomputeCellPositions()
-    maxColumn.current = maxItems
   }
 
   const cellRenderer: CellRenderer = ({ index, key, parent, style }) => {
@@ -106,10 +97,17 @@ function MasonryComponent<T>({
     )
   }
   const isRowLoaded = ({ index }: { index: number }) => !!items[index]
+
   const loadMoreRows = async () => {
     if (isLoading || !hasMore || !handleNextPage) return
     handleNextPage()
   }
+  if (isLoading === false && items.length === 0)
+    return (
+      <Typography sx={{ color: theme.customColors.white1 }}>
+        No result
+      </Typography>
+    )
   return (
     <InfiniteLoader
       isRowLoaded={isRowLoaded}
@@ -119,22 +117,20 @@ function MasonryComponent<T>({
       {({ onRowsRendered }) => (
         <AutoSizer onResize={onResize}>
           {({ width, height }: { width: number; height: number }) => {
-            if (!cacheRef.current || !cellPositionerRef.current) {
-              return null
-            }
+            if (!cacheRef.current || !cellPositionerRef.current) return null
             return (
               <Masonry
                 style={{ height: `${height}px` }}
                 autoHeight={true}
                 ref={masonryRef}
-                cellCount={items.length}
+                cellCount={items.length || total}
                 cellMeasurerCache={cacheRef.current}
                 cellPositioner={cellPositionerRef.current}
                 cellRenderer={cellRenderer}
                 onCellsRendered={onRowsRendered}
                 height={height}
                 width={width}
-                keyMapper={keyMapper}
+                keyMapper={(index) => index}
               />
             )
           }}
@@ -143,5 +139,4 @@ function MasonryComponent<T>({
     </InfiniteLoader>
   )
 }
-
-export default MasonryComponent
+export default memo(MasonryComponent) as <T>(props: Props<T>) => JSX.Element

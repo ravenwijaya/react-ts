@@ -22,27 +22,26 @@ const TagItem = ({ item, width, height }: Props) => (
   <ItemContainer width={width} height={height}>
     <ContentContainer>
       {item ? (
-        <ItemLogoContainer>
-          <ItemLogo>
-            <ItemText noWrap>{item?.name}</ItemText>
-          </ItemLogo>
-        </ItemLogoContainer>
+        <>
+          <ItemLogoContainer>
+            <ItemLogo>
+              <ItemText noWrap>{item.name}</ItemText>
+            </ItemLogo>
+          </ItemLogoContainer>
+          <TextContainer>
+            <TagText noWrap>{item.name}</TagText>
+            <CountText>{item.count} Results</CountText>
+          </TextContainer>
+        </>
       ) : (
-        <Skeleton
-          variant="rectangular"
-          width={150}
-          height={150}
-          sx={{ bgcolor: theme.customColors.white3 }}
-        />
-      )}
-      <TextContainer>
-        {item ? (
-          <>
-            <TagText noWrap>{item?.name}</TagText>
-            <CountText>{item?.count} Results</CountText>
-          </>
-        ) : (
-          <>
+        <>
+          <Skeleton
+            variant="rectangular"
+            width={150}
+            height={150}
+            sx={{ bgcolor: theme.customColors.white3 }}
+          />
+          <TextContainer>
             <Skeleton
               variant="rectangular"
               width={120}
@@ -53,10 +52,11 @@ const TagItem = ({ item, width, height }: Props) => (
               width={50}
               sx={{ bgcolor: theme.customColors.white3 }}
             />
-          </>
-        )}
-      </TextContainer>
+          </TextContainer>
+        </>
+      )}
     </ContentContainer>
   </ItemContainer>
 )
+
 export default TagItem

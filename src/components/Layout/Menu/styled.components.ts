@@ -12,15 +12,16 @@ interface MenuButtonContainerProps {
 export const MenuContainer = styled(Box)`
   display: flex;
   position: fixed;
-  bottom: 0px;
+  bottom: 0;
   width: 100%;
   z-index: 99;
   background-color: ${({ theme }) => theme.customColors.grey1};
   height: 66px;
+
   ${media.xlarge`
-  flex-direction:column;
-  width:80px;
-  height:100%;
+    flex-direction: column;
+    width: 80px;
+    height: 100%;
   `}
 `
 
@@ -38,8 +39,9 @@ export const ItemContainer = styled(Box)`
   justify-content: center;
   width: 100%;
   gap: 22px;
+
   ${media.xlarge`
-  flex-direction:column;
+    flex-direction: column;
   `}
 `
 
@@ -57,7 +59,7 @@ export const ButtonText = styled(Typography)`
   font-weight: ${({ theme }) => theme.fontWeight.regular};
   color: ${({ theme }) => theme.customColors.white1};
   line-height: 18px;
-  letter-spacing: 0.4000000059604645px;
+  letter-spacing: 0.4px;
 `
 
 export const StyledBadge = styled(Badge)`
