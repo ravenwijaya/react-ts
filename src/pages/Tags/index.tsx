@@ -30,7 +30,6 @@ const Tags = () => {
           <MasonryComponent<Tag>
             defaultHeight={199}
             defaultWidth={150}
-            columnCount={isDesktop ? 5 : 2}
             ySpacer={isDesktop ? 24 : 24}
             xSpacer={isDesktop ? 36 : 24}
             items={tagsResponse ?? []}

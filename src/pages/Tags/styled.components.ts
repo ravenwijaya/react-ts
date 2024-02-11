@@ -36,12 +36,14 @@ export const Wrapper = styled(Box)`
   margin-top: 24px;
   display: flex;
   flex: 1;
-  padding: 0px 26px 0px 25px;
-  ${media.xlarge`
-  padding:0px 257px;
-`}
+  justify-content: center;
 `
 export const ListContainer = styled(Box)`
-  display: flex;
-  flex: 1;
+  width: 324px;
+  ${media.mobile`
+    width:700px;
+  `}
+  ${media.xlarge`
+    width:846px;
+  `}
 `

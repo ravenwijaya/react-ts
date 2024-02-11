@@ -25,6 +25,7 @@ import {
   ResultContainer,
   SizeText,
   ResultText,
+  FooterContainer,
 } from './styled.components'
 import { Hidden } from '../../components/UI/Hidden'
 import ItemList from '../../components/List'
@@ -108,13 +109,14 @@ const Home = () => {
           </ResultContainer>
           <InputSlider name="pageSize" control={control} />
         </LimitContainer>
-        <Button
-          style={{ marginTop: 'auto' }}
-          onClick={handleSubmit(onSubmit)}
-          variant={BUTTON_VARIANTS.NORMAL}
-        >
-          Submit
-        </Button>
+        <FooterContainer>
+          <Button
+            onClick={handleSubmit(onSubmit)}
+            variant={BUTTON_VARIANTS.NORMAL}
+          >
+            Submit
+          </Button>
+        </FooterContainer>
       </SettingContainer>
 
       <Hidden only={['xsmall', 'small', 'medium', 'large']}>

@@ -100,16 +100,20 @@ export const HeaderContainer = styled(Box)`
   `}
 `
 export const ListResultContainer = styled(Box)`
-  display: flex;
-  flex: 1;
+  width: 324px;
+  ${media.mobile`
+    width:700px;
+  `}
+  ${media.xlarge`
+    width:725px;
+  `}
 `
 
 export const ContentContainer = styled(Box)`
   display: flex;
   flex: 1;
-  padding: 0px 20px;
+  justify-content: center;
   ${media.xlarge`
-    padding:0px 130px;
     padding-bottom:12px;
   `}
 `

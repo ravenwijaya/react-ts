@@ -98,7 +98,6 @@ const Results = () => {
             <MasonryComponent<User>
               defaultHeight={isDesktop ? 197 : 282}
               defaultWidth={isDesktop ? 219 : 335}
-              columnCount={isDesktop ? 3 : 2}
               ySpacer={34}
               xSpacer={31}
               items={responseUsers?.data}

@@ -81,6 +81,15 @@ export const LimitContainer = styled(Box)`
     border-bottom:1px solid ${({ theme }) => theme.customColors.white5};
   `}
 `
+
+export const FooterContainer = styled(Box)`
+  margin-top: auto;
+  padding-bottom: 24px;
+  ${media.xlarge`
+    padding-bottom: 0;
+  `}
+`
+
 export const ListContainer = styled(Box)`
   display: flex;
   width: 375px;

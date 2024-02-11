@@ -15,7 +15,6 @@ import { theme } from '../../theme/theme'
 
 interface Props<T> {
   items: T[]
-  columnCount: number
   defaultWidth: number
   defaultHeight: number
   total: number
@@ -28,7 +27,6 @@ interface Props<T> {
 
 function MasonryComponent<T>({
   items = [],
-  columnCount,
   defaultWidth,
   defaultHeight,
   total = 1,
@@ -64,7 +62,7 @@ function MasonryComponent<T>({
 
     cellPositionerRef.current = createMasonryCellPositioner({
       cellMeasurerCache: cacheRef.current,
-      columnCount,
+      columnCount: 5,
       columnWidth: customWidth,
       spacer,
     })
