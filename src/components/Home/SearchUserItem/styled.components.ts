@@ -34,6 +34,9 @@ export const FooterContainer = styled(Box)`
   display: flex;
   flex-direction: column;
   margin-top: 20.33px;
+  ${media.xlarge`
+    margin-top: 12px;
+  `}
 `
 
 export const Name = styled(Typography)`

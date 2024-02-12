@@ -1,6 +1,12 @@
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
 import { CSSProperties, useCallback, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import {
+  StyledTabs,
+  Tab,
+  TabPanel,
+  TabsList,
+} from '../../components/TabComponent/styled.components'
 import UserItem from '../../components/Home/UserItem'
 import { BUTTON_VARIANTS, ROUTES } from '../../constants/core'
 import {
@@ -17,10 +23,6 @@ import {
   ListContainer,
   SearchContainer,
   SettingContainer,
-  Tab,
-  TabPanel,
-  StyledTabs,
-  TabsList,
   Title,
   ResultContainer,
   SizeText,
@@ -95,7 +97,7 @@ const Home = () => {
           <Title variant="h5">Search</Title>
           <Input
             name="search"
-            placeholder="keyword"
+            placeholder="Keyword"
             control={control}
             borderColor={theme.customColors.white2}
             textColor={theme.customColors.white1}
@@ -105,7 +107,7 @@ const Home = () => {
           <Title variant="h5"># Of Results Per Page</Title>
           <ResultContainer>
             <SizeText>{watchPageSize * 2}</SizeText>
-            <ResultText>result</ResultText>
+            <ResultText>results</ResultText>
           </ResultContainer>
           <InputSlider name="pageSize" control={control} />
         </LimitContainer>

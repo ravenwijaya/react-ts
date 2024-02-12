@@ -12,12 +12,14 @@ import {
   useFetchUsersQuery,
 } from '../../store/apis/userApi'
 import {
-  BaseContainer,
-  ListContainer,
+  StyledTabs,
   Tab,
   TabPanel,
-  StyledTabs,
   TabsList,
+} from '../../components/TabComponent/styled.components'
+import {
+  BaseContainer,
+  ListContainer,
   Title,
   ResultContainer,
   HeaderContainer,

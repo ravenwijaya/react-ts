@@ -42,7 +42,8 @@ export const ItemContainer = styled(Box)`
 
   ${media.xlarge`
     flex-direction: column;
-    gap: 22px;
+    gap: 24px;
+    margin-top:9px;
   `}
 `
 
@@ -54,19 +55,20 @@ export const MenuButtonContainer = styled(Box)<MenuButtonContainerProps>`
   gap: 1.96px;
 `
 
-export const ButtonText = styled(Typography)`
+export const ButtonText = styled(Typography)<{isActive:boolean}>`
   font-family: Ubuntu;
   font-size: 12px;
   font-weight: ${({ theme }) => theme.fontWeight.regular};
   color: ${({ theme }) => theme.customColors.white1};
   line-height: 18px;
   letter-spacing: 0.4px;
+  opacity:${({isActive})=>isActive?1:0};
 `
 
 export const StyledBadge = styled(Badge)`
   .MuiBadge-badge {
-    min-width: 7px;
-    height: 7px;
+    min-width: 5px;
+    height: 5px;
     padding: 0;
     background-color: ${({ theme }) => theme.customColors.blue1};
     top: -3px;

@@ -41,11 +41,11 @@ const MenuItem = ({
         color={isActive ? theme.customColors.white1 : theme.customColors.grey2}
       />
     </StyledBadge>
-    {isActive && (
-      <Hidden only={['xsmall', 'small', 'medium', 'large']}>
-        <ButtonText variant="caption">{text}</ButtonText>
-      </Hidden>
-    )}
+    <Hidden only={['xsmall', 'small', 'medium', 'large']}>
+      <ButtonText variant="caption" isActive={isActive}>
+        {text}
+      </ButtonText>
+    </Hidden>
   </MenuButtonContainer>
 )
 

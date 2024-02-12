@@ -48,7 +48,7 @@ export const ItemText = styled(Typography)`
 export const TextContainer = styled(Box)`
   flex-direction: column;
   display: flex;
-  margin-top:10px;
+  margin-top: 10px;
 `
 
 export const TagText = styled(Typography)`

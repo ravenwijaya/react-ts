@@ -13,7 +13,7 @@ interface ButtonProps {
 
 const NormalButton = styled(BaseButton)(
   ({ theme }) => `
-    width: 335px;
+    width: 343px;
     height: 40px;
     padding: 13px 16px 13px 16px;
     border-radius: 4px;
