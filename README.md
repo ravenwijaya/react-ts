@@ -1,9 +1,5 @@
 # Company React App
 
-## Overview
-
-This is a React application scaffolded with webpack and configured for development and production builds. It leverages various tools and libraries to enhance the development experience and optimize the production output.
-
 ## Getting Started
 
 Make sure you have [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed on your machine.
@@ -14,33 +10,11 @@ Make sure you have [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.co
 
 ## Scripts
 
-- **start**: Runs the development server using webpack with the configuration from `webpack.dev.js`.
-- **build**: Builds the production-ready application using webpack with the configuration from `webpack.prod.js`.
-- **lint**: Lints the project files using ESLint.
-- **lint:fix**: Lints and fixes the project files using ESLint.
-- **format**: Formats the project files using Prettier.
-
-## Technologies Used
-
-### Development Dependencies
-
-- [TypeScript](https://www.typescriptlang.org/)
-- [Webpack](https://webpack.js.org/)
-- [ESLint](https://eslint.org/)
-- [Prettier](https://prettier.io/)
-- [Husky](https://typicode.github.io/husky/)
-- [PostCSS](https://postcss.org/)
-
-### Dependencies
-
-- [React](https://reactjs.org/)
-- [Material-UI](https://mui.com/)
-- [Styled Components](https://styled-components.com/)
-
-## Folder Structure
-
-- `src`: Contains the source code of the React application.
-- `public`: Contains static assets and the HTML template used by HtmlWebpackPlugin.
+- `start`: Starts the development server using webpack with the development configuration.
+- `build`: Builds the application for production using webpack with the production configuration.
+- `lint`: Lints the code using ESLint.
+- `lint:fix`: Lints the code and attempts to fix any fixable issues using ESLint.
+- `format`: Formats the code using Prettier.
 
 ## Configuration Files
 
