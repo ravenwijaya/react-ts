@@ -46,7 +46,7 @@ const Home = () => {
   const [value, setValue] = useState(1)
   const { handleSubmit, control, watch } = useForm<FormInput>({
     defaultValues: {
-      pageSize: state?.pageSize ?? 15,
+      pageSize: state?.pageSize ? state.pageSize / 2 : 15,
       search: state?.keyword ?? '',
     },
   })
@@ -75,7 +75,7 @@ const Home = () => {
   const onSubmit: SubmitHandler<FieldValues> = (inputData) => {
     const { pageSize, search } = inputData as FormInput
     const newState = {
-      ...(pageSize && { pageSize }),
+      ...(pageSize && { pageSize: pageSize * 2 }),
       ...(search && { keyword: search }),
     }
     navigate(ROUTES.RESULTS, { state: newState })
@@ -104,8 +104,8 @@ const Home = () => {
         <LimitContainer>
           <Title variant="h5"># Of Results Per Page</Title>
           <ResultContainer>
-            <SizeText variant="h3">{watchPageSize}</SizeText>
-            <ResultText>results</ResultText>
+            <SizeText>{watchPageSize * 2}</SizeText>
+            <ResultText>result</ResultText>
           </ResultContainer>
           <InputSlider name="pageSize" control={control} />
         </LimitContainer>
@@ -114,7 +114,7 @@ const Home = () => {
             onClick={handleSubmit(onSubmit)}
             variant={BUTTON_VARIANTS.NORMAL}
           >
-            Submit
+            SEARCH
           </Button>
         </FooterContainer>
       </SettingContainer>

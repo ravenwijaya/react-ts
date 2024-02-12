@@ -30,7 +30,7 @@ const TagItem = ({ item, width, height }: Props) => (
           </ItemLogoContainer>
           <TextContainer>
             <TagText noWrap>{item.name}</TagText>
-            <CountText>{item.count} Results</CountText>
+            <CountText>{item.count} Questions</CountText>
           </TextContainer>
         </>
       ) : (

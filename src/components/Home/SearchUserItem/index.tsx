@@ -22,9 +22,7 @@ const SearchUserItem = ({ item, width, height }: Props) => (
       <ImageContainer>
         {item ? (
           <img
-            src={
-              'https://venturebeat.com/wp-content/uploads/2017/03/ShopChat-e1506572472915.jpg'
-            }
+            src={'https://picsum.photos/id/237/320/240'}
             style={{
               height: '100%',
               width: '100%',

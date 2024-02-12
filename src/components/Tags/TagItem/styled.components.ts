@@ -26,13 +26,13 @@ export const ItemLogoContainer = styled(Box)`
 `
 
 export const ItemLogo = styled(Box)`
-  padding: 7px 14px 7px 14px;
+  padding: 3px 14px 3px 14px;
   margin-left: 10px;
   border-radius: 8px;
   border: 4px solid ${({ theme }) => theme.customColors.white1};
   gap: 10px;
   width: fit-content;
-  height: fit-content;
+  height: 50px;
 `
 export const ItemText = styled(Typography)`
   font-family: Ubuntu;
@@ -48,6 +48,7 @@ export const ItemText = styled(Typography)`
 export const TextContainer = styled(Box)`
   flex-direction: column;
   display: flex;
+  margin-top:10px;
 `
 
 export const TagText = styled(Typography)`

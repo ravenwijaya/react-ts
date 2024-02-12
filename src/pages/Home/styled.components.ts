@@ -47,25 +47,30 @@ export const Title = styled(Typography)`
 export const ResultContainer = styled(Box)`
   display: flex;
   gap: 10px;
-  align-items: baseline;
+  margin-bottom:10px;
+  ${media.xlarge`
+  margin-bottom:0;
+`}
 `
 export const SizeText = styled(Typography)`
   font-family: Ubuntu;
   font-size: 48px;
   font-weight: ${({ theme }) => theme.fontWeight.bold};
   color: ${({ theme }) => theme.customColors.white1};
-  line-height: 72px;
   letter-spacing: 0em;
   text-align: left;
+  line-height: 50px;
 `
 export const ResultText = styled(Typography)`
   font-family: Ubuntu;
   font-size: 16px;
+  align-self:end;
   font-weight: ${({ theme }) => theme.fontWeight.regular};
   color: ${({ theme }) => theme.customColors.white1};
   line-height: 24px;
   letter-spacing: 0.15000000596046448px;
   text-align: left;
+  margin-bottom:4px;
 `
 
 export const LimitContainer = styled(Box)`
@@ -84,8 +89,12 @@ export const LimitContainer = styled(Box)`
 
 export const FooterContainer = styled(Box)`
   margin-top: auto;
+  padding-top: 80px;
   padding-bottom: 24px;
+  border-top:1px solid ${({ theme }) => theme.customColors.white5};
   ${media.xlarge`
+    border:none;
+    padding-top: 0;
     padding-bottom: 0;
   `}
 `

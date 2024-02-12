@@ -100,7 +100,7 @@ export const HeaderContainer = styled(Box)`
   `}
 `
 export const ListResultContainer = styled(Box)`
-  width: 324px;
+  width: 335px;
   ${media.mobile`
     width:700px;
   `}

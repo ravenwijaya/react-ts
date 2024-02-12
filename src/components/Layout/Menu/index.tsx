@@ -1,4 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useMediaQuery } from '@mui/material'
+import { deviceType } from '../../../utils/media'
 import { theme } from '../../../theme/theme'
 import Icon from '../../UI/Icon'
 import Hidden from '../../UI/Hidden'
@@ -16,19 +18,26 @@ export interface MenuItemProps {
   text: string
   icon: string
   isActive: boolean
+  showBadge: boolean
   onClick: () => void
 }
 
-const MenuItem = ({ text, icon, isActive, onClick }: MenuItemProps) => (
+const MenuItem = ({
+  text,
+  icon,
+  isActive,
+  onClick,
+  showBadge,
+}: MenuItemProps) => (
   <MenuButtonContainer
     onClick={!isActive ? onClick : () => {}}
     isActive={isActive}
   >
-    <StyledBadge badgeContent={isActive ? null : ''}>
+    <StyledBadge badgeContent={showBadge ? '' : null}>
       <Icon
         name={icon}
-        width={24}
-        height={24}
+        width={19.76}
+        height={20.04}
         color={isActive ? theme.customColors.white1 : theme.customColors.grey2}
       />
     </StyledBadge>
@@ -43,6 +52,7 @@ const MenuItem = ({ text, icon, isActive, onClick }: MenuItemProps) => (
 const Menu = () => {
   const { pathname } = useLocation()
   const navigate = useNavigate()
+  const isDesktop = useMediaQuery(deviceType.desktop)
 
   const items = [
     { text: 'Home', route: ROUTES.HOME },
@@ -66,6 +76,9 @@ const Menu = () => {
             isActive={
               pathname === route ||
               (route === ROUTES.HOME && pathname === ROUTES.RESULTS)
+            }
+            showBadge={
+              route === ROUTES.TAGS && pathname !== ROUTES.TAGS && isDesktop
             }
             icon={ICON_NAMES.UNION}
           />

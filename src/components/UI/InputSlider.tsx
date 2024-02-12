@@ -1,7 +1,7 @@
 import Slider from '@mui/material/Slider'
 import styled from 'styled-components'
 import { Control, Controller, FieldValues, Path } from 'react-hook-form'
-import { theme } from '../../theme/theme'
+import media from '../../utils/media'
 
 const defaultMarks = [
   {
@@ -48,37 +48,49 @@ interface InputProps<T extends FieldValues> {
   min?: number
   marks?: Mark[]
 }
-
-const StyledSlider = styled(Slider)({
-  height: 8,
-  padding: 0,
-  '& .MuiSlider-track': {
-    border: 'none',
-    background: `linear-gradient(270deg, #FFD25F 0.13%, #FF5C01 100%)`,
-  },
-  '& .MuiSlider-thumb': {
-    height: 20,
-    width: 20,
-    border: `6px solid ${theme.customColors.yellow1}`,
-    backgroundColor: theme.customColors.grey1,
-  },
-  '& .MuiSlider-rail': {
-    backgroundColor: theme.customColors.white4,
-  },
-  '& .MuiSlider-markLabel': {
-    fontFamily: 'Ubuntu',
-    fontSize: '16px',
-    fontWeight: theme.fontWeight.medium,
-    lineHeight: '24px',
-    letterSpacing: '0.15000000596046448px',
-    textAlign: 'left',
-    color: theme.customColors.white1,
-    top: 37,
-  },
-  '& .MuiSlider-mark': {
-    display: 'none',
-  },
-})
+const StyledSlider = styled(Slider)(
+  ({ theme }) => `
+    height: 8px;
+    padding: 0;
+    
+    & .MuiSlider-track {
+      border: none;
+      background: linear-gradient(270deg, #FFD25F 0.13%, #FF5C01 100%);
+    }
+    
+    & .MuiSlider-thumb {
+      height: 26px;
+      width: 26px;
+      border: 6px solid ${theme.customColors.yellow1};
+      background-color: ${theme.customColors.grey1};
+    }
+    
+    & .MuiSlider-rail {
+      background-color: ${theme.customColors.white4};
+    }
+    
+    & .MuiSlider-markLabel {
+      font-family: Ubuntu;
+      font-size: 14px;
+      font-weight: ${theme.fontWeight.regular};
+      line-height: 21px;
+      letter-spacing: 0.25px;
+      text-align: left;
+      color: ${theme.customColors.white1};
+      top: 22px;
+    }
+    
+    & .MuiSlider-mark {
+      display: none;
+    }
+    ${media.xlarge`
+      font-weight: ${theme.fontWeight.medium};
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0.15px;
+    `}
+  `,
+)
 
 function InputSlider<T extends FieldValues>({
   name,

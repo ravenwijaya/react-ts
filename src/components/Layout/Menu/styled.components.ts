@@ -38,10 +38,11 @@ export const ItemContainer = styled(Box)`
   align-items: center;
   justify-content: center;
   width: 100%;
-  gap: 22px;
+  gap: 52.24px;
 
   ${media.xlarge`
     flex-direction: column;
+    gap: 22px;
   `}
 `
 

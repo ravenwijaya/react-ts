@@ -33,7 +33,7 @@ export const ImageContainer = styled(Box)`
 export const FooterContainer = styled(Box)`
   display: flex;
   flex-direction: column;
-  margin-top: 12px;
+  margin-top: 20.33px;
 `
 
 export const Name = styled(Typography)`

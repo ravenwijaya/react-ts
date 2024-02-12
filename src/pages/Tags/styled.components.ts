@@ -23,7 +23,6 @@ export const Title = styled(Typography)`
   color: ${({ theme }) => theme.customColors.white1};
   line-height: 36px;
   letter-spacing: 0px;
-  margin-left: -5px;
   ${media.xlarge`
     margin-left:0px;
     font-family: Ubuntu;
