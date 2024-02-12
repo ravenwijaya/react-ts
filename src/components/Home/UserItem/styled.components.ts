@@ -10,7 +10,7 @@ export const UserContainer = styled(Box)`
 `
 export const LeftContent = styled(Box)`
   width: 40px;
-  margin:auto;
+  margin: auto;
 `
 export const MiddleContent = styled(Box)`
   flex: 1;

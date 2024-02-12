@@ -55,14 +55,14 @@ export const MenuButtonContainer = styled(Box)<MenuButtonContainerProps>`
   gap: 1.96px;
 `
 
-export const ButtonText = styled(Typography)<{isActive:boolean}>`
+export const ButtonText = styled(Typography)<{ isActive: boolean }>`
   font-family: Ubuntu;
   font-size: 12px;
   font-weight: ${({ theme }) => theme.fontWeight.regular};
   color: ${({ theme }) => theme.customColors.white1};
   line-height: 18px;
   letter-spacing: 0.4px;
-  opacity:${({isActive})=>isActive?1:0};
+  opacity: ${({ isActive }) => (isActive ? 1 : 0)};
 `
 
 export const StyledBadge = styled(Badge)`

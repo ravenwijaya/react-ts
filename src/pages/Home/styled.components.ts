@@ -102,5 +102,3 @@ export const ListContainer = styled(Box)`
   flex-direction: column;
   background-color: ${({ theme }) => theme.customColors.grey1};
 `
-
-
